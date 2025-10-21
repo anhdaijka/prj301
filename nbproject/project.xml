@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://www.netbeans.org/ns/project/1">
+    <type>org.netbeans.modules.web.project</type>
+    <configuration>
+        <data xmlns="http://www.netbeans.org/ns/web-project/3">
+            <name>EmployeeManagement</name>
+            <minimum-ant-version>1.6.5</minimum-ant-version>
+            <web-module-libraries>
+                <library dirs="200">
+                    <file>${file.reference.jaxb-api-2.1.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+                <library dirs="200">
+                    <file>${file.reference.mssql-jdbc-13.2.0.jre11.jar-1}</file>
+                    <path-in-war>WEB-INF/lib</path-in-war>
+                </library>
+            </web-module-libraries>
+            <web-module-additional-libraries/>
+            <source-roots>
+                <root id="src.dir"/>
+            </source-roots>
+            <test-roots>
+                <root id="test.src.dir"/>
+            </test-roots>
+        </data>
+        <libraries xmlns="http://www.netbeans.org/ns/cdnjs-libraries/1">
+            <library name="daisyui" version="5.1.25">
+                <file localPath="web/js/libs/daisyui/daisyui.css" path="daisyui.css"/>
+                <file localPath="web/js/libs/daisyui/themes.css" path="themes.css"/>
+                <file localPath="web/js/libs/daisyui/themes.min.css" path="themes.min.css"/>
+            </library>
+            <library name="tailwindcss" version="4.1.13">
+                <file localPath="web/js/libs/tailwindcss/chunk-G32FJCSR.mjs" path="chunk-G32FJCSR.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/chunk-HTB5LLOP.mjs" path="chunk-HTB5LLOP.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/chunk-U5SIPDGO.mjs" path="chunk-U5SIPDGO.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/colors-b_6i0Oi7.d.ts" path="colors-b_6i0Oi7.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/colors.d.ts" path="colors.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/colors.js" path="colors.js"/>
+                <file localPath="web/js/libs/tailwindcss/colors.min.js" path="colors.min.js"/>
+                <file localPath="web/js/libs/tailwindcss/colors.mjs" path="colors.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/default-theme.d.ts" path="default-theme.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/default-theme.js" path="default-theme.js"/>
+                <file localPath="web/js/libs/tailwindcss/default-theme.min.js" path="default-theme.min.js"/>
+                <file localPath="web/js/libs/tailwindcss/default-theme.mjs" path="default-theme.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/flatten-color-palette.d.ts" path="flatten-color-palette.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/flatten-color-palette.js" path="flatten-color-palette.js"/>
+                <file localPath="web/js/libs/tailwindcss/flatten-color-palette.min.js" path="flatten-color-palette.min.js"/>
+                <file localPath="web/js/libs/tailwindcss/flatten-color-palette.mjs" path="flatten-color-palette.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/lib.d.ts" path="lib.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/lib.js" path="lib.js"/>
+                <file localPath="web/js/libs/tailwindcss/lib.min.js" path="lib.min.js"/>
+                <file localPath="web/js/libs/tailwindcss/lib.mjs" path="lib.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/plugin.d.ts" path="plugin.d.ts"/>
+                <file localPath="web/js/libs/tailwindcss/plugin.js" path="plugin.js"/>
+                <file localPath="web/js/libs/tailwindcss/plugin.min.js" path="plugin.min.js"/>
+                <file localPath="web/js/libs/tailwindcss/plugin.mjs" path="plugin.mjs"/>
+                <file localPath="web/js/libs/tailwindcss/resolve-config-BIFUA2FY.d.ts" path="resolve-config-BIFUA2FY.d.ts"/>
+            </library>
+        </libraries>
+    </configuration>
+</project>
