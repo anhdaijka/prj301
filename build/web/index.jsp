@@ -10,9 +10,15 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/static/css/styles.jsp"/>
-        <title>Sev7n HomePage - Your skills your deal</title>
+        <title>One1 HomePage - Your skills your deal</title>
     </head>
-    <body>
-        <jsp:include page="/views/layouts/header.jsp"/>
-    </body>
+
+    <jsp:include page="/views/layouts/header.jsp"/>
+
+    <jsp:include page="/views/layouts/hero.jsp"/>
+    
+    <jsp:include page="/views/layouts/popular.jsp"/>
+
+    <jsp:include page="/views/layouts/footer.jsp"/>
+
 </html>

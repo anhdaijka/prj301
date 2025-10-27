@@ -1,4 +1,4 @@
-<div class="translate-y-1/4 navbar bg-base-300 rounded-md border border-[0.1px] max-w-7xl mx-auto">
+<div class="fixed left-0 top-0 right-0 h-16 translate-y-1/2 navbar bg-base-100 rounded-md border border-[0.1px] max-w-7xl mx-auto">
     <div class="navbar-start">
         <div class="dropdown">
             <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
@@ -14,7 +14,7 @@
                 <li><a>Company</a></li>
             </ul>
         </div>
-        <a class="btn btn-ghost text-xl">Sev7n</a>
+        <a class="btn btn-ghost text-xl">One1</a>
     </div>
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
@@ -32,7 +32,7 @@
             </svg>
         </button>
         
-        <span>Employee</span>
+        <span>Not logged in</span>
         
           <div class="divider divider-horizontal -mx-1"></div>
 
