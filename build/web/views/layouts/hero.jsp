@@ -1,10 +1,10 @@
-<section class="w-full min-h-[90vh] bg-base-300 grid place-content-center" >
+<section class="w-full min-h-screen md:min-h-[90vh] bg-base-300 grid place-content-center" >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div
             class="my-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28 flex gap-3 lg:flex-justify lg:flex flex-col lg:flex-row">
             <div class="sm:text-center lg:text-left">
-                <h1 class="text-4xl tracking-tight font-extrabold sm:text-5xl md:text-6xl">
+                <h1 class="text-4xl text-center md:text-left tracking-tight font-extrabold sm:text-5xl md:text-6xl">
                     <p class="block xl:inline">Your Future</p>
                     <p>Starts with</p>   
                     <p class="block text-secondary xl:inline">One1!</p>

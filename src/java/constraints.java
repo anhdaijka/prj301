@@ -8,5 +8,5 @@
  * @author anhdaik
  */
 public class constraints {
-    public String siteName = "On1" ;
+    public String siteName = "One1" ;
 }

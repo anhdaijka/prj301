@@ -12,7 +12,7 @@
 
     <div class=" grid place-content-center">
 
-        <div class="columns-1 md:columns-4 space-y-6">
+        <div class="columns-1 md:columns-2 xl:columns-4 space-y-6">
             <c:forEach var="i" begin="1" end="8">
                 <jsp:include page="/views/layouts/categoryCard.jsp">
                     <jsp:param name="title" value="Wordpress Developer"/>
