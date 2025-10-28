@@ -16,7 +16,7 @@
             <c:forEach var="i" begin="1" end="8">
                 <jsp:include page="/views/layouts/categoryCard.jsp">
                     <jsp:param name="title" value="Wordpress Developer"/>
-                    <jsp:param name="sub" value="72+ Job availble"/>
+                    <jsp:param name="sub" value="72+ Job available"/>
                 </jsp:include>
             </c:forEach>
         </div>

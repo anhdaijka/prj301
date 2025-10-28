@@ -1,6 +1,6 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-<div class="w-[300px] aspect-[16/9] bg-base-100 shadow-sm flex flex-col p-4 md:flex-row gap-4 items-center">
+<div class="w-md md:w-[300px] md:aspect-[16/9] bg-base-100 shadow-sm flex flex-col p-4 md:flex-row gap-4 items-center">
 
     <div class="size-18 flex items-center justify-center bg-base-300 rounded-md">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-12">

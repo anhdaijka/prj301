@@ -1,26 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<!--<div class="card bg-base-100 w-96 shadow-sm">
-    <figure>
-        <img
-            src="${param.image}"
-            alt="Shoes" />
-    </figure>
-    <div class="card-body">
-        <h2 class="card-title flex flex-col gap-2 items-center">
-            <p class="text-gray-400 text-sm">${param.company}'s</p>
-${param.title}
-</h2>
-<p>${param.sub}</p>
-<div class="card-actions justify-end">
-<div class="badge badge-outline">Fashion</div>
-<div class="badge badge-outline">Products</div>
-</div>
-</div>
-</div>-->
-
-<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-96 shadow-sm border border-[0.1px] rounded-box">
+<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-md md:w-96 shadow-sm border border-[0.1px] rounded-box">
     <div class="flex items-center gap-4">
         <div class="size-30 rounded-box overflow-hidden">
             <img src="${param.src}" alt="${param.title}" class="w-full h-full object-cover"/>

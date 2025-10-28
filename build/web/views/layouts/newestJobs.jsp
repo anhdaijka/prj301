@@ -5,11 +5,12 @@
 --%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.*" %>
-<div class="min-h-[50vh] w-full py-12">
+<div class="min-h-[50vh] w-full py-12 relative">
     <jsp:include page="/views/layouts/heading.jsp">
-        <jsp:param name="title" value="Popular Category"/>
+        <jsp:param name="title" value="Newest Jobs"/>
         <jsp:param name="sub" value="The last job offers Upload"/>
     </jsp:include>
+    <a href="#" class="absolute right-8 top-24 hover:underline text-secondary"> More ></a>
 
     <% List<String> items = Arrays.asList("ReactJS", "ExpressJS");
         pageContext.setAttribute("items", items); %>

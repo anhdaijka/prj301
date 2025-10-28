@@ -21,6 +21,12 @@
     
     <jsp:include page="/views/layouts/newestJobs.jsp"/>
 
+    <jsp:include page="/views/layouts/how.jsp"/>
+    
+    <jsp:include page="/views/layouts/topCompanies.jsp"/>
+    
+    <jsp:include page="/views/layouts/conclusion.jsp"/>
+    
     <jsp:include page="/views/layouts/footer.jsp"/>
 
 </html>
