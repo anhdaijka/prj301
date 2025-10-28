@@ -17,7 +17,9 @@
 
     <jsp:include page="/views/layouts/hero.jsp"/>
     
-    <jsp:include page="/views/layouts/popular.jsp"/>
+    <jsp:include page="/views/layouts/popularCat.jsp"/>
+    
+    <jsp:include page="/views/layouts/newestJobs.jsp"/>
 
     <jsp:include page="/views/layouts/footer.jsp"/>
 
