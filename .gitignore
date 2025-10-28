@@ -1,10 +1,1 @@
-# NetBeans private configs
-nbproject/private/
-nbproject/private/private.properties
-
-# Build folders
-build/
-dist/
-
-# User-specific settings
-*.log
+/build/

@@ -9,24 +9,43 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <jsp:include page="/static/css/styles.jsp"/>
-        <title>One1 HomePage - Your skills your deal</title>
+        <link rel="stylesheet" href="/EmployeeManagement/static/css/styles.css"/>
+        <title>Login</title>
     </head>
+    <body>
+        
+        <%
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            if (username == null) username = "";
+            if (password == null) password = "";
+        %>
+        <div style="width: 100vw;display:flex;justify-content: center;align-items: center;margin-top: 10rem;flex-direction: column;">
+            <h2 style="text-align: center;">Login Page</h2>
+            <form action="Login" method="POST">
 
-    <jsp:include page="/views/layouts/header.jsp"/>
+                <label>Username: </label>
+                <input type="text" name="username" value="<%= username%>">
 
-    <jsp:include page="/views/layouts/hero.jsp"/>
-    
-    <jsp:include page="/views/layouts/popularCat.jsp"/>
-    
-    <jsp:include page="/views/layouts/newestJobs.jsp"/>
+                <br>
 
-    <jsp:include page="/views/layouts/how.jsp"/>
-    
-    <jsp:include page="/views/layouts/topCompanies.jsp"/>
-    
-    <jsp:include page="/views/layouts/conclusion.jsp"/>
-    
-    <jsp:include page="/views/layouts/footer.jsp"/>
+                <label>Password: </label>
+                <input type="password" name="password" value="<%= password%>">
 
+                <br>
+
+                <button type="submit">Login</button>
+
+            </form>
+        </div>
+
+        <%
+            String error = (String) request.getAttribute("error");
+            if (error == null) error = "";
+        %>
+        <div><%= error %></div>
+        <div>
+            <h1>Le Minh Phuong</h1>
+        </div>
+    </body>
 </html>
