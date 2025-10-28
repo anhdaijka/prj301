@@ -32,6 +32,10 @@
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controllers.LogoutController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>PostJobController</servlet-name>
+        <servlet-class>controller.PostJobController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
         <url-pattern>/LoginController</url-pattern>
@@ -63,5 +67,9 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/Logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PostJobController</servlet-name>
+        <url-pattern>/PostJob</url-pattern>
     </servlet-mapping>
 </web-app>
