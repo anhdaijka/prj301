@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package dal;
+package service;
 
 import model.User;
 
@@ -10,6 +10,6 @@ import model.User;
  *
  * @author FPT
  */
-public interface IUserDAO {
-    User findByEmail(String email) throws Exception;
+public interface IUserService {
+    User login (String email, String password) throws Exception;
 }
