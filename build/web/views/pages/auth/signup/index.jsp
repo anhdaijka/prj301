@@ -10,12 +10,12 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <jsp:include page="/static/css/styles.jsp"/>
-        <title>One1 HomePage - Your skills your deal</title>
+        <title>Sign Up</title>
     </head>
 
     <%--<jsp:include page="/views/layouts/header.jsp"/>--%>
 
-    <jsp:include page="/views/layouts/loginForm.jsp"/>
+    <jsp:include page="/views/components/signupForm.jsp"/>
 
     <%--<jsp:include page="/views/layouts/footer.jsp"/>--%>
 

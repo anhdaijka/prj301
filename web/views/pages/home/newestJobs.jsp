@@ -19,7 +19,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <c:forEach var="i" begin="1" end="6">
-                <jsp:include page="/views/layouts/jobCard.jsp">
+                <jsp:include page="/views/components/jobCard.jsp">
                     <jsp:param name="link" value="#"/>
                     <jsp:param name="src" value="https://gigamall.com.vn/data/2019/09/20/11491513_LOGO-McDonald_s.jpg"/>
                     <jsp:param name="company" value="Macdonald's"/>

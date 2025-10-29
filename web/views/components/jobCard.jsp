@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-md md:w-96 shadow-sm border border-[0.1px] rounded-box">
+<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-md md:w-96 shadow-sm rounded-box ${param.className}">
     <div class="flex items-center gap-4">
         <div class="size-30 rounded-box overflow-hidden">
             <img src="${param.src}" alt="${param.title}" class="w-full h-full object-cover"/>
@@ -14,7 +14,7 @@
 
                 <c:forEach var="skill" items="${param.skills}">
                     <c:set var="newSkill" value="${fn:replace(fn:replace(skill, '[', ''), ']', '')}" />
-                    <span class="badge badge-outline badge-secondary">${newSkill}</span>
+                    <span class="badge badge-outline badge-sm badge-secondary">${newSkill}</span>
                 </c:forEach>
 
             </div>
@@ -36,7 +36,7 @@
 
         </span>
 
-        <span class="badge badge-outline">1 day ago</span>
+        <span class="badge badge-secondary">1 day ago</span>
     </div> 
 
 </a>
