@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dto/LoginRequest.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/IUserDAO.java</file>
@@ -17,6 +18,9 @@
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/model/User.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/static/css/styles.jsp</file>
+=======
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/index.jsp</file>
+>>>>>>> bbed8aed265b1672fb9a559cc7ef9d82da8036c5
         </group>
     </open-files>
 </project-private>
