@@ -11,5 +11,5 @@ import model.User;
  * @author FPT
  */
 public interface IUserDAO {
-    User findByEmail(String email) throws Exception;
+    User getUserByUserEmail(String email) throws Exception;
 }

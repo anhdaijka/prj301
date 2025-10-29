@@ -13,14 +13,10 @@
         <title>One1 HomePage - Your skills your deal</title>
     </head>
 
-    <jsp:include page="/views/layouts/header.jsp"/>
+    <%--<jsp:include page="/views/layouts/header.jsp"/>--%>
 
-    <jsp:include page="/views/layouts/hero.jsp"/>
-    
-    <jsp:include page="/views/layouts/popularCat.jsp"/>
-    
-    <jsp:include page="/views/layouts/newestJobs.jsp"/>
+    <jsp:include page="/views/layouts/loginForm.jsp"/>
 
-    <jsp:include page="/views/layouts/footer.jsp"/>
+    <%--<jsp:include page="/views/layouts/footer.jsp"/>--%>
 
 </html>

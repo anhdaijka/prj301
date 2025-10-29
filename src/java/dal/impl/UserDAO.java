@@ -8,6 +8,7 @@ import dal.DBContext;
 import dal.IUserDAO;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.UUID;
 import model.User;
 
@@ -21,7 +22,7 @@ public class UserDAO extends DBContext implements IUserDAO {
     ResultSet rs;
 
     @Override
-    public User findByEmail(String email) throws Exception {
+    public User getUserByUserEmail(String email) throws Exception {
 
         User user = new User();
         try {
@@ -38,10 +39,8 @@ public class UserDAO extends DBContext implements IUserDAO {
                 user.setBirthday(rs.getDate("Birthday").toLocalDate());
                 user.setAvatarurl(rs.getString("AvatarUrl"));
                 user.setRoleId(UUID.fromString(rs.getString("RoleId")));
-                
-                
             }
-        } catch (Exception e) {
+        } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         }
         return user;
