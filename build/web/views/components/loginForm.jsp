@@ -56,12 +56,12 @@
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Email address *
                         </legend>
-                        <input type="email" name="email" class="input w-full" placeholder="Your email here" />
+                        <input type="email" name="email" class="input w-full" placeholder="Your email here" value="<c:out value="${requestScope.email}"/>"/>
                     </fieldset>
 
                     <fieldset class="fieldset">
                         <legend class="fieldset-legend">Password *</legend>
-                        <input type="password" name="password" class="input w-full" placeholder="Type your password" />
+                        <input type="password" name="password" class="input w-full" placeholder="Type your password" value="<c:out value="${requestScope.password}"/>"/>
                         <a href="#" class="label text-sm text-error focus:text-warning hover:text-warning hover:underline">Forgot password?</a>
                     </fieldset>
 
