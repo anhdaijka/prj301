@@ -60,16 +60,14 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        //request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
         HttpSession session = request.getSession(false);
         User user = (session != null) ? (User) session.getAttribute("user") : null;
-        
+
         if (user == null) {
-            // ✅ Đường dẫn đúng đến login page
             RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/login/index.jsp");
             rd.forward(request, response);
         } else {
-            //redirectByRole(user, request, response);
+            response.sendRedirect("index.jsp"); // hoặc redirectByRole(user, response);
         }
     }
 
@@ -87,20 +85,26 @@ public class LoginController extends HttpServlet {
         String email = request.getParameter("email");
         String password = request.getParameter("password");
 
+        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+            request.setAttribute("Error", "Please fill in all fields!");
+            request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
+            return;
+        }
+
         UserDAO userDAO = new UserDAO();
-        User user = userDAO.login(email, password /*PasswordUtil.encryptPassword(password)*/);
+        User user = userDAO.login(email, password);
 
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            
-            //Phan quyen o day
-            response.sendRedirect("index.jsp");
+            //response.sendRedirect("/index.jsp"); // hoặc redirectByRole(user, response);
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {
-            RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/login/index.jsp");
             request.setAttribute("email", email);
-            request.setAttribute("error", "Incorrect email or password!");
-            rd.forward(request, response);
+            request.setAttribute("Error", "Incorrect email or password!");
+            //request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+
         }
     }
 

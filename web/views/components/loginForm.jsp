@@ -66,7 +66,7 @@
                     </fieldset>
 
                     <div class="mt-6 text-center">
-                        <a href="#" class="btn btn-secondary w-full">Log In</a>
+                        <button type="submit" class="btn btn-secondary w-full">Log In</button>
                     </div>
 
                 </form>

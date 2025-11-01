@@ -3,24 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dto/LoginRequest.java</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/IUserDAO.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/index.jsp</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/service/impl/UserService.java</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/impl/UserDAO.java</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/utils/PasswordUtils.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/controller/LoginController.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/UserDAO.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/login/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/ConnectDB.properties</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/service/IUserService.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/DBContext.java</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dto/UserDTO.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/model/User.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/loginForm.jsp</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/signupForm.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/static/css/styles.jsp</file>
-=======
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/index.jsp</file>
->>>>>>> bbed8aed265b1672fb9a559cc7ef9d82da8036c5
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step1.jsp</file>
         </group>
     </open-files>
 </project-private>
