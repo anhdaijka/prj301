@@ -1,7 +1,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-lg xl:w-md h-72 shadow-sm border border-[0.1px] rounded-box">
+<a href="${param.link}" class="flex flex-col gap-4 p-6 bg-base-100 w-sm h-72 shadow-sm border border-[0.1px] rounded-box">
     <div class="flex items-start gap-4 h-full">
 
         <div class="avatar">
@@ -29,7 +29,7 @@
 
             </div>
 
-            <p class="text-md truncate text-pretty text-clip h-24">
+            <p class="text-sm truncate text-pretty text-clip h-24">
                 ${param.bio}
             </p>
 

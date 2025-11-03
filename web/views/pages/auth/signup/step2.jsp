@@ -12,12 +12,13 @@
         </div>
 
         <div class="mt-8">
-            <form action="/SignUp" method="POST">
+            <form action="/EmployeeManagement/signup" method="POST">
+                <input type="hidden" name="currentStep" value="2">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Location
                     </legend>
-                    <input type="text" class="input w-full" placeholder="Enter your location" />
-                                        <label class="label">
+                    <input type="text" name="location" class="input w-full" placeholder="Enter your location" />
+                    <label class="label">
                         <input type="checkbox" checked="checked" class="checkbox" />
                         I am Interested In Teleworking
                     </label>
@@ -33,10 +34,10 @@
 
 
                 <div class="mt-6 text-center">
-                    <a href="#" class="btn btn-secondary w-full">Continue</a>
+                    <button type="submit" class="btn btn-secondary w-full" name="nextStep" value="3">Continue</button>
                 </div>
                 <div class="mt-2 text-center">
-                    <a href="#" class="btn btn-ghost w-full">Skip</a>
+                    <button type="submit" name="nextStep" value="3" class="btn btn-ghost w-full">Skip</button>
                 </div>
 
             </form>

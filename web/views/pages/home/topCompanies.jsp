@@ -18,7 +18,7 @@
     <div class="flex items-center justify-center">
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-12 lg:gap-6">
-            <jsp:include page="/views/layouts/comCard.jsp">
+            <jsp:include page="/views/components/comCard.jsp">
                 <jsp:param name="link" value="#"/>
                 <jsp:param name="src" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4OiSP_7PaeZOblrnqTRzv8KZkj-ZUKgGmmQ&s"/>
                 <jsp:param name="title" value="Sandro"/>
@@ -29,7 +29,7 @@
                 <jsp:param name="stars" value="4.5"/>
             </jsp:include>
 
-            <jsp:include page="/views/layouts/comCard.jsp">
+            <jsp:include page="/views/components/comCard.jsp">
                 <jsp:param name="link" value="#"/>
                 <jsp:param name="src" value="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSTWlnJCnn2ljYqv2t4XY9bM5U4pnohvXZRw&s"/>
                 <jsp:param name="title" value="Microsoft"/>
@@ -40,7 +40,7 @@
                 <jsp:param name="stars" value="4.8"/>
             </jsp:include>           
 
-            <jsp:include page="/views/layouts/comCard.jsp">
+            <jsp:include page="/views/components/comCard.jsp">
                 <jsp:param name="link" value="#"/>
                 <jsp:param name="src" value="https://gigamall.com.vn/data/2019/09/20/11491513_LOGO-McDonald_s.jpg"/>
                 <jsp:param name="title" value="Mcdonald's"/>
@@ -52,5 +52,4 @@
 
         </div>
     </div>
-</div>
 </div>

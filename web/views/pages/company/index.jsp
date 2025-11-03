@@ -18,7 +18,16 @@
     <jsp:include page="../../components/header.jsp"/>
 
     <section class="w-full min-h-screen flex flex-col max-w-7xl mx-auto py-36">
-        <jsp:include page="../../components/searchInput.jsp"/>
+        <jsp:include page="../../components/comHead.jsp">
+            <jsp:param name="name" value="BWM" />
+            <jsp:param name="background" value="https://anhdaik.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fcover.1a753d17.png&w=1920&q=75" />
+            <jsp:param name="avatar" value="https://anhdaik.vercel.app/_next/static/media/avatar.5746dabf.png" />
+            <jsp:param name="location" value="Germany" />
+            <jsp:param name="email" value="BWM@gmail.com" />
+            <jsp:param name="phone" value="+1 98482346" />
+            <jsp:param name="size" value="1000" />
+            
+        </jsp:include>
         <div class="max-w-7xl md:w-7xl mx-auto flex flex-col md:flex-row">
             <aside class="hidden md:block w-1/4 mr-6">
                 <ul class="menu bg-base-200 rounded-box w-full">

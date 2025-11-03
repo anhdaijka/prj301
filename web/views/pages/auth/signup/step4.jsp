@@ -13,14 +13,16 @@
         </div>
 
         <div class="mt-8">
-            <form action="/SignUp" method="POST">
+            <form action="/EmployeeManagement/signup" method="POST">
+                <input type="hidden" name="currentStep" value="4">
+
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Your CV URL
                     </legend>
-                    <input type="text" class="input w-full" placeholder="Enter Your CV URL" />
+                    <input type="text" class="input w-full" placeholder="Enter Your CV URL" name="cv"/>
 
                     <label class="label w- mt-2 text-md">
-                        <input type="checkbox" checked="checked" class="checkbox" />
+                        <input type="checkbox" checked="checked" class="checkbox" id="checked"/>
                         I sure that is my CV
                     </label>
 
@@ -28,12 +30,10 @@
 
 
 
-                <div class="mt-6 text-center">
-                    <a href="#" class="btn btn-secondary w-full">Finish Up</a>
+                <div class="mt-6 text-center w-full">
+                    <button type="submit" class="btn btn-secondary w-full" name="nextStep" value="5">Finish Up</button>
                 </div>
-                <div class="mt-2 text-center">
-                    <a href="#" class="btn btn-ghost w-full">Skip</a>
-                </div>
+
 
             </form>
 
