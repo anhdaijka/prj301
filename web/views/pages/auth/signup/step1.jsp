@@ -6,7 +6,7 @@
                 <img src="https://iconape.com/wp-content/files/ww/350307/png/350307.png"  class='w-56'/>
             </div>
 
-            <jsp:include page="/views/layouts/heading.jsp">
+            <jsp:include page="/views/components/heading.jsp">
                 <jsp:param name="title" value="Give us your information"/>
                 <jsp:param name="sub" value="Please enter your personal details to set up your account and personalize your experience"/>
             </jsp:include>

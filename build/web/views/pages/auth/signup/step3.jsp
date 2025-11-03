@@ -5,7 +5,7 @@
                 <img src="https://iconape.com/wp-content/files/ww/350307/png/350307.png"  class='w-56'/>
             </div>
 
-            <jsp:include page="/views/layouts/heading.jsp">
+            <jsp:include page="/views/components/heading.jsp">
                 <jsp:param name="title" value="How much is the mininum salary You want?"/>
                 <jsp:param name="sub" value="We use this to match your nearby offers that approximately pay this amount or more"/>
             </jsp:include>
