@@ -5,12 +5,18 @@
 
 package controller;
 
+import dal.UserDAO;
+import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.util.UUID;
+import model.User;
 
 /**
  *
@@ -53,7 +59,17 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        HttpSession session = request.getSession(false);
+        
+        User user = (session != null) ? (User) session.getAttribute("user") : null;
+        
+        if (user == null) {
+            RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/signup/index.jsp");
+            rd.forward(request, response);
+        } else {
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+        }
     } 
 
     /** 
@@ -66,7 +82,41 @@ public class SignupController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        processRequest(request, response);
+        //processRequest(request, response);
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String name = request.getParameter("name");
+        String phone = request.getParameter("phone");
+        String birthdayStr = request.getParameter("birthday");
+        String avatarUrl = request.getParameter("avatarUrl");
+        
+        LocalDate birthday = null;
+        if (birthday != null && !birthdayStr.isEmpty()) {
+            birthday = LocalDate.parse(birthdayStr);
+        }
+        
+        UserDAO userDAO = new UserDAO();
+        if (userDAO.findUser(email)) {
+            request.setAttribute("error", "Email already exists!");
+            RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/signup/index.jsp");
+            rd.forward(request, response);
+            return;
+        }
+        
+        User newUser = new User(UUID.randomUUID(), email, password, name, phone, birthday, null, null);
+        
+        boolean created = userDAO.signUp(newUser);
+        
+        if (created) {
+            HttpSession session = request.getSession(true);
+            session.setAttribute("user", newUser);
+            
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+        } else {
+            request.setAttribute("error", "Sign up failed, please try again");
+            RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/signup/index.jsp");
+            rd.forward(request, response);
+        }
     }
 
     /** 

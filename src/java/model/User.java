@@ -14,8 +14,6 @@ import java.util.UUID;
  */
 public class User {
     private UUID id;
-    private OffsetDateTime createdAt;
-    private OffsetDateTime updatedAt;
     private String email;
     private String password;
     private String name;
@@ -23,14 +21,13 @@ public class User {
     private LocalDate birthday;
     private String avatarurl;
     private UUID roleId;
+    private String role;
 
     public User() {
     }
 
-    public User(UUID id, OffsetDateTime createdAt, OffsetDateTime updatedAt, String email, String password, String name, String phone, LocalDate birthday, String avatarurl, UUID roleId) {
+    public User(UUID id, String email, String password, String name, String phone, LocalDate birthday, String avatarurl, UUID roleId) {
         this.id = id;
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -46,22 +43,6 @@ public class User {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public OffsetDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(OffsetDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public OffsetDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(OffsetDateTime updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
     public String getEmail() {
@@ -118,5 +99,13 @@ public class User {
 
     public void setRoleId(UUID roleId) {
         this.roleId = roleId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

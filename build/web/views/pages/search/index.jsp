@@ -22,19 +22,17 @@
         <div class="max-w-7xl md:w-7xl mx-auto flex flex-col md:flex-row">
             <aside class="hidden md:block w-1/4 mr-6">
                 <ul class="menu bg-base-200 rounded-box w-full">
-                    <li>
-                        <h2 class="menu-title">Sort Ascending / Descending</h2>
-                        <ul>
-                            <li><a>Work Language</a></li>
-                            <li><a class="menu-active">Publication Date</a></li>
-                            <li><a>Education Level</a></li>
-                            <li><a>Job type</a></li>
-                            <li><a>Distance</a></li>
-                            <li><a>Salary (Monthly)</a></li>
-                            <li><a>Work modes</a></li>
-                            <li><a>Boss's beauty</a></li>
-                        </ul>
-                    </li>
+                    <li class="menu-title">Sort Ascending / Descending</h2>
+
+                    <li><a>Work Language</a></li>
+                    <li><a>Publication Date</a></li>
+                    <li><a>Education Level</a></li>
+                    <li><a>Job type</a></li>
+                    <li><a>Distance</a></li>
+                    <li><a>Salary (Monthly)</a></li>
+                    <li><a>Work modes</a></li>
+                    <li><a>Boss's beauty</a></li>
+
                 </ul>
             </aside>
 

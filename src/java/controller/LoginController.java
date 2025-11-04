@@ -14,7 +14,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.User;
-import utils.PasswordUtil;
 
 /**
  *
@@ -97,6 +96,13 @@ public class LoginController extends HttpServlet {
         if (user != null) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
+            session.setAttribute("userId", user.getId());
+            session.setAttribute("userName", user.getName());
+            session.setAttribute("userRole", user.getRole());
+            
+            System.out.println("Login successful!");
+            System.out.println("User: " + user.getName());
+            System.out.println("Role: " + user.getRole());
             //response.sendRedirect("/index.jsp"); // hoặc redirectByRole(user, response);
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {

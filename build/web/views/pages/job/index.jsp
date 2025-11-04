@@ -15,7 +15,7 @@
         <title>One1 HomePage - Your skills your deal</title>
     </head>
 
-    <jsp:include page="../../components/header.jsp"/>
+    <jsp:include page="/views/components/header.jsp"/>
 
     <section class="w-full min-h-screen flex flex-col max-w-7xl mx-auto py-36">
         <jsp:include page="../../components/searchInput.jsp"/>
