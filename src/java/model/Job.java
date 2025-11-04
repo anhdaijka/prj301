@@ -8,38 +8,46 @@ public class Job {
 
     private int id;
     private String title;
-    private String description;
+    private int categoryId;
     private String salary;
     private String location;
     private Date endDate;
-    private String status;
-    private UUID userId;
-    private Integer categoryId;
-    private Timestamp createdAt;
     private String workingHours;
     private Integer minAge;
     private Integer maxAge;
+    private String experienceLevel;
+    private String degreeRequirement;
+    private String genderRequirement;
+    private String description;
+    private String benefits;
+    private String otherRequirements;
+    private Timestamp createdAt;
+    private UUID userId;
+    private String status;
 
     // Constructors
     public Job() {
     }
 
-    public Job(int id, String title, String description, String salary, String location,
-            Date endDate, String status, UUID userId, Integer categoryId, Timestamp createdAt,
-            String workingHours, Integer minAge, Integer maxAge) {
+    public Job(int id, String title, int categoryId, String salary, String location, Date endDate, String workingHours, Integer minAge, Integer maxAge, String experienceLevel, String degreeRequirement, String genderRequirement, String description, String benefits, String otherRequirements, Timestamp createdAt, UUID userId, String status) {
         this.id = id;
         this.title = title;
-        this.description = description;
+        this.categoryId = categoryId;
         this.salary = salary;
         this.location = location;
         this.endDate = endDate;
-        this.status = status;
-        this.userId = userId;
-        this.categoryId = categoryId;
-        this.createdAt = createdAt;
         this.workingHours = workingHours;
         this.minAge = minAge;
         this.maxAge = maxAge;
+        this.experienceLevel = experienceLevel;
+        this.degreeRequirement = degreeRequirement;
+        this.genderRequirement = genderRequirement;
+        this.description = description;
+        this.benefits = benefits;
+        this.otherRequirements = otherRequirements;
+        this.createdAt = createdAt;
+        this.userId = userId;
+        this.status = status;
     }
 
     public int getId() {
@@ -106,11 +114,11 @@ public class Job {
         this.userId = userId;
     }
 
-    public Integer getCategoryId() {
+    public int getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(Integer categoryId) {
+    public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
     }
 
@@ -145,4 +153,45 @@ public class Job {
     public void setMaxAge(Integer maxAge) {
         this.maxAge = maxAge;
     }
+
+    public String getBenefits() {
+        return benefits;
+    }
+
+    public void setBenefits(String benefits) {
+        this.benefits = benefits;
+    }
+
+    public String getOtherRequirements() {
+        return otherRequirements;
+    }
+
+    public void setOtherRequirements(String otherRequirements) {
+        this.otherRequirements = otherRequirements;
+    }
+
+    public String getExperienceLevel() {
+        return experienceLevel;
+    }
+
+    public void setExperienceLevel(String experienceLevel) {
+        this.experienceLevel = experienceLevel;
+    }
+
+    public String getDegreeRequirement() {
+        return degreeRequirement;
+    }
+
+    public void setDegreeRequirement(String degreeRequirement) {
+        this.degreeRequirement = degreeRequirement;
+    }
+
+    public String getGenderRequirement() {
+        return genderRequirement;
+    }
+
+    public void setGenderRequirement(String genderRequirement) {
+        this.genderRequirement = genderRequirement;
+    }
+
 }

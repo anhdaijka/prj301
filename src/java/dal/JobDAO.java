@@ -6,6 +6,7 @@ import model.Skill;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,6 @@ public class JobDAO extends DBContext {
     public List<Category> getAllCategories() {
         PreparedStatement stm = null;
         ResultSet rs = null;
-
         List<Category> categories = new ArrayList<>();
 
         try {
@@ -45,6 +45,7 @@ public class JobDAO extends DBContext {
                 if (connection != null) {
                     connection.close();
                 }
+
             } catch (SQLException e) {
                 e.printStackTrace();
             }
@@ -59,7 +60,6 @@ public class JobDAO extends DBContext {
         List<Skill> skills = new ArrayList<>();
 
         try {
-
             String sql = "SELECT id, name FROM skills ORDER BY name";
             stm = connection.prepareStatement(sql);
             rs = stm.executeQuery();
@@ -92,17 +92,19 @@ public class JobDAO extends DBContext {
         return skills;
     }
 
+    // insert into table job
     private int insertJob(Job job) throws SQLException {
         String sqlJob = "INSERT INTO jobs (title, description, salary, location, endDate, "
-                + "user_id, category_id, working_hours, min_age, max_age, status) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                + "user_id, category_id, working_hours, min_age, max_age, "
+                + "benefits, other_requirements, experience_level, degree_requirement, gender_requirement, status) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         PreparedStatement ps = null;
         ResultSet rs = null;
         int newJobId = -1;
 
         try {
-            ps = connection.prepareStatement(sqlJob, Statement.RETURN_GENERATED_KEYS);
+            ps = connection.prepareStatement(sqlJob, Statement.RETURN_GENERATED_KEYS); // tra ve id vua sinh ra
 
             ps.setString(1, job.getTitle());
             ps.setString(2, job.getDescription());
@@ -117,14 +119,20 @@ public class JobDAO extends DBContext {
             if (job.getMinAge() != null) {
                 ps.setInt(9, job.getMinAge());
             } else {
-                ps.setNull(9, java.sql.Types.INTEGER);
+                ps.setNull(9, Types.INTEGER);
             }
             if (job.getMaxAge() != null) {
                 ps.setInt(10, job.getMaxAge());
             } else {
-                ps.setNull(10, java.sql.Types.INTEGER);
+                ps.setNull(10, Types.INTEGER);
             }
-            ps.setString(11, "open");
+
+            ps.setString(11, job.getBenefits());
+            ps.setString(12, job.getOtherRequirements());
+            ps.setString(13, job.getExperienceLevel());
+            ps.setString(14, job.getDegreeRequirement());
+            ps.setString(15, job.getGenderRequirement());
+            ps.setString(16, "open");
 
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected == 0) {
@@ -151,7 +159,7 @@ public class JobDAO extends DBContext {
         }
     }
 
-    private void insertSkills(int newJobId, String[] skillIds) throws SQLException {
+    private void insertJobSkills(int newJobId, List<Integer> skillIds) throws SQLException {
         String sqlSkill = "INSERT INTO job_skills (job_id, skill_id) VALUES (?, ?)";
 
         PreparedStatement ps = null;
@@ -159,8 +167,7 @@ public class JobDAO extends DBContext {
         try {
             ps = connection.prepareStatement(sqlSkill);
 
-            for (String skillIdStr : skillIds) {
-                int skillId = Integer.parseInt(skillIdStr);
+            for (int skillId : skillIds) {
                 ps.setInt(1, newJobId);
                 ps.setInt(2, skillId);
                 ps.addBatch();
@@ -174,17 +181,95 @@ public class JobDAO extends DBContext {
         }
     }
 
+    private int findSkillByName(String skillName) throws SQLException {
+        if (skillName == null) {
+            return 0;
+        }
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        try {
+            String sql = "SELECT id FROM skills WHERE UPPER(name) = UPPER(?)";
+            ps = connection.prepareStatement(sql);
+            ps.setString(1, skillName.trim());
+            rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+            return 0;
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
+
+    // create skill if not find
+    public int createSkill(String skillName) throws SQLException {
+
+        // if find -> return 
+        int id = findSkillByName(skillName);
+        if (id != 0) {
+            if (connection != null) {
+                connection.close();
+            }
+            return id;
+        }
+
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+
+        // create
+        try {
+            String sql = "INSERT INTO skills (name) VALUES (?)";
+
+            ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, skillName.trim());
+            ps.executeUpdate();
+
+            rs = ps.getGeneratedKeys();
+            if (rs.next()) {
+                return rs.getInt(1);
+            } else {
+                throw new SQLException("Failed to create new skill.");
+            }
+
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
     // post job
-    public boolean postJob(Job job, String[] skillIDs) throws SQLException {
+    public boolean postJob(Job job, List<Integer> skillIds) throws SQLException {
         boolean success = false;
 
         try {
+
+            // off auto commit
             this.connection.setAutoCommit(false);
+
+            // insert job
             int newJobId = insertJob(job);
-            
-            if (skillIDs != null && skillIDs.length > 0) {
-                insertSkills(newJobId, skillIDs);
+
+            // insert skill with job new insert
+            if (skillIds != null) {
+                insertJobSkills(newJobId, skillIds);
             }
+
             connection.commit();
             success = true;
 
