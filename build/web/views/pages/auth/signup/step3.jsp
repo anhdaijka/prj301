@@ -31,7 +31,7 @@
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Payment Period
                     </legend>
-                    <input type="text" class="input w-full" placeholder="Enter Payment Period" />
+                    <input type="text" name="payment" class="input w-full" placeholder="Enter Payment Period" />
 
                 </fieldset>
 

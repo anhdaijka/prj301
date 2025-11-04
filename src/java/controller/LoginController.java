@@ -97,12 +97,8 @@ public class LoginController extends HttpServlet {
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
             session.setAttribute("userId", user.getId());
-            session.setAttribute("userName", user.getName());
-            session.setAttribute("userRole", user.getRole());
-            
-            System.out.println("Login successful!");
-            System.out.println("User: " + user.getName());
-            System.out.println("Role: " + user.getRole());
+            session.setAttribute("userName", user.getFullName());
+            session.setAttribute("userRole", user.getRoleName());
             //response.sendRedirect("/index.jsp"); // hoặc redirectByRole(user, response);
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         } else {

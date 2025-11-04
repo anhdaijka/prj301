@@ -28,7 +28,7 @@
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Postal code
                     </legend>
-                    <input type="text" class="input w-full" placeholder="Enter your Postal code" />
+                    <input type="text" name="postalcode" class="input w-full" placeholder="Enter your Postal code" />
 
                 </fieldset>
 

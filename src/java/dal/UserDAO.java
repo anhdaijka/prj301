@@ -12,7 +12,6 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.OffsetDateTime;
 import java.util.UUID;
 import java.sql.Types;
 import model.User;
@@ -44,10 +43,10 @@ public class UserDAO extends DBContext {
 
     public User login(String email, String password) {
         User user = null;
-        String sql = "SELECT u.*, r.Name AS Role\n" +
-"                  FROM Users u \n" +
-"                  JOIN Roles r ON u.roleId = r.id \n" +
-"                  WHERE u.Email = ? AND u.Password = ?";
+        String sql = "SELECT u.*, r.Name AS Role\n"
+                + "                  FROM Users u \n"
+                + "                  JOIN Roles r ON u.roleId = r.id \n"
+                + "                  WHERE u.Email = ? AND u.Password = ?";
 
         if (connection == null) {
             System.out.println("Database connection is null! Check DBContext or properties file.");
@@ -63,20 +62,31 @@ public class UserDAO extends DBContext {
                     user = new User();
 
                     user.setId(UUID.fromString(rs.getString("Id")));
+                    user.setFullName(rs.getString("FullName"));
                     user.setEmail(rs.getString("Email"));
                     user.setPassword(rs.getString("Password"));
-                    user.setName(rs.getString("Name"));
-                    user.setPhone(rs.getString("Phone"));
-                    user.setAvatarurl(rs.getString("AvatarUrl"));
-                    String roleIdStr = rs.getString("RoleId");
-                    if (roleIdStr != null) {
-                        user.setRoleId(UUID.fromString(roleIdStr));
+                    user.setLocation(rs.getString("Location"));
+                    user.setPostalCode(rs.getString("PostalCode"));
+                    user.setMinimumSalary(rs.getInt("MinimumSalary"));
+                    Object minSalObj = rs.getObject("MinimumSalary");
+                    if (minSalObj != null) {
+                        user.setMinimumSalary(rs.getInt("MinimumSalary"));
+                    } else {
+                        user.setMinimumSalary(null);
                     }
+                    user.setPaymentPeriod(rs.getString("PaymentPeriod"));
+                    user.setResumeUrl(rs.getString("ResumeUrl"));
+                    user.setAvatarUrl(rs.getString("AvatarUrl"));
+                    user.setPhone(rs.getString("Phone"));
                     java.sql.Date birthday = rs.getDate("Birthday");
                     if (birthday != null) {
                         user.setBirthday(birthday.toLocalDate());
                     }
-                    user.setRole(rs.getString("Role"));
+                    String roleIdStr = rs.getString("RoleId");
+                    if (roleIdStr != null) {
+                        user.setRoleId(UUID.fromString(roleIdStr));
+                    }
+                    user.setRoleName(rs.getString("Role"));
                 }
             }
         } catch (SQLException ex) {
@@ -90,8 +100,10 @@ public class UserDAO extends DBContext {
     }
 
     public boolean signUp(User user) {
-        String sql = "INSERT INTO dbo.Users (Id, Email, [Password], [Name], Phone, Birthday, AvatarUrl, RoleId) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO dbo.Users ("
+                + "Id, FullName, Email, [Password], Location, PostalCode, MinimumSalary, "
+                + "PaymentPeriod, ResumeUrl, RoleId) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         if (connection == null) {
             System.out.println("Database connection is null! Check DBContext or properties file.");
@@ -102,22 +114,28 @@ public class UserDAO extends DBContext {
             UUID userId = UUID.randomUUID();
 
             stm.setString(1, userId.toString());
-            stm.setString(2, user.getEmail());
-            stm.setString(3, user.getPassword());
-            stm.setString(4, user.getName());
-            stm.setString(5, user.getPhone());
-            stm.setString(7, user.getAvatarurl());
+            stm.setString(2, user.getFullName());
+            stm.setString(3, user.getEmail());
+            stm.setString(4, user.getPassword());
+            stm.setString(5, user.getLocation());
+            stm.setString(6, user.getPostalCode());
 
-            if (user.getRoleId() != null) {
-                stm.setString(8, user.getRoleId().toString());
+            // MinimumSalary (có thể null)
+            if (user.getMinimumSalary() != null) {
+                stm.setInt(7, user.getMinimumSalary());
             } else {
-                stm.setString(8, "92eb5931-6ba6-4ad9-b5bd-caf70a152246");
+                stm.setNull(7, Types.INTEGER);
             }
 
-            if (user.getBirthday() != null) {
-                stm.setDate(6, Date.valueOf(user.getBirthday()));
+            stm.setString(8, user.getPaymentPeriod());
+            stm.setString(9, user.getResumeUrl());
+
+            // RoleId (có thể mặc định role user)
+            if (user.getRoleId() != null) {
+                stm.setString(13, user.getRoleId().toString());
             } else {
-                stm.setNull(6, Types.DATE);
+                // default role (ví dụ: User)
+                stm.setString(13, "92eb5931-6ba6-4ad9-b5bd-caf70a152246");
             }
 
             int rows = stm.executeUpdate();

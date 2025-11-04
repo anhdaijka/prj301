@@ -2,7 +2,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 package controller;
 
 import dal.UserDAO;
@@ -26,34 +25,37 @@ import model.User;
  * @author FPT
  */
 public class SignupController extends HttpServlet {
-   
-    /** 
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignupController</title>");  
+            out.println("<title>Servlet SignupController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignupController at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet SignupController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -61,7 +63,7 @@ public class SignupController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         //processRequest(request, response);
         HttpSession session = request.getSession(false);
         User user = (session != null) ? (User) session.getAttribute("user") : null;
@@ -84,7 +86,7 @@ public class SignupController extends HttpServlet {
                 step = 1; // Nếu param "step" không hợp lệ, quay về bước 1
             }
         }
-        
+
         // Lấy dữ liệu form cũ từ session (nếu có) để điền lại
         // phòng trường hợp người dùng bấm "Back"
         Map<String, String> formData = (Map<String, String>) session.getAttribute("signupData");
@@ -95,10 +97,11 @@ public class SignupController extends HttpServlet {
         // Gửi step đến JSP
         request.setAttribute("step", step);
         request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
-    } 
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -106,7 +109,7 @@ public class SignupController extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         //processRequest(request, response);
         HttpSession session = request.getSession();
 
@@ -126,80 +129,101 @@ public class SignupController extends HttpServlet {
             System.out.println("Lỗi parsing step: " + e.getMessage());
         }
 
-        // 2. Cập nhật dữ liệu từ form của bước hiện tại vào Map (Logic file 1)
-        // (Giả sử các bước của bạn thu thập các thông tin này)
         switch (currentStep) {
-            case 1: // Bước 1: Email, Password, Tên
+            case 1:
                 formData.put("email", request.getParameter("email"));
                 formData.put("password", request.getParameter("password"));
-                // (Giả sử bạn có check "confirm password" ở phía client)
                 break;
-            case 2: // Bước 2: Tên, Điện thoại
+            case 2:
                 formData.put("name", request.getParameter("name"));
-                formData.put("phone", request.getParameter("phone"));
+                formData.put("postalcode", request.getParameter("postalcode"));
                 break;
-            case 3: // Bước 3: Ngày sinh, Avatar (URL)
-                formData.put("birthday", request.getParameter("birthday")); // Sẽ có dạng "YYYY-MM-DD"
-                formData.put("avatarUrl", request.getParameter("avatarUrl"));
+            case 3:
+                formData.put("amount", request.getParameter("amount")); // Sẽ có dạng "YYYY-MM-DD"
+                formData.put("payment", request.getParameter("payment"));
                 break;
-            // Thêm các case khác nếu bạn có nhiều bước hơn
+            case 4:
+                formData.put("cv", request.getParameter("cv"));
+                break;
         }
 
         session.setAttribute("signupData", formData);
-        
-        if (nextStep == 4) {
+
+        if (nextStep == 5) {
             String email = formData.get("email");
             String password = formData.get("password");
-            String name = formData.get("name");
-            String phone = formData.get("phone");
-            String birthdayStr = formData.get("birthday");
-            String avatarUrl = formData.get("avatarUrl");
-            
-            UserDAO userDAO = new UserDAO();
-            
-            if (userDAO.findUser(email)) {
-                request.setAttribute("error", "Email đã tồn tại!");
-                request.setAttribute("step", 1); // Quay lại bước 1
-                request.setAttribute("formData", formData); // Giữ lại data cũ
-                request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
-                return;
-            }
-            
-            // 4.2. Parse ngày sinh (Fix lỗi từ file 2)
+            String fullName = formData.get("name");
+            String postalCode = formData.get("postalcode");
+            String amount = formData.get("amount");       // lương tối thiểu
+            String payment = formData.get("payment");     // monthly / yearly
+            String resumeUrl = formData.get("cv");        // link file CV
+
+            // Các trường không có trong form → để null
+            String location = null;
+            String avatarUrl = null;
+            String phone = null;
             LocalDate birthday = null;
-            if (birthdayStr != null && !birthdayStr.isEmpty()) {
+
+            // Parse minimumSalary từ amount (nếu có)
+            Integer minimumSalary = null;
+            if (amount != null && !amount.isEmpty()) {
                 try {
-                    birthday = LocalDate.parse(birthdayStr);
-                } catch (DateTimeParseException e) {
-                    System.out.println("Lỗi parse ngày sinh: " + e.getMessage());
+                    minimumSalary = Integer.parseInt(amount);
+                } catch (NumberFormatException e) {
+                    minimumSalary = null;
                 }
             }
 
-            User newUser = new User(UUID.randomUUID(), email, password, name, phone, birthday, avatarUrl, null);
-            
+            // RoleId mặc định (ví dụ: User role)
+            UUID defaultRoleId = UUID.fromString("92eb5931-6ba6-4ad9-b5bd-caf70a152246");
+
+            // === Tạo đối tượng User theo constructor mới ===
+            User newUser = new User(
+                    UUID.randomUUID(), // id
+                    fullName, // fullName
+                    email, // email
+                    password, // password
+                    location, // location
+                    postalCode, // postalCode
+                    minimumSalary, // minimumSalary
+                    payment, // paymentPeriod
+                    resumeUrl, // resumeUrl
+                    avatarUrl, // avatarUrl
+                    phone, // phone
+                    birthday, // birthday
+                    defaultRoleId // roleId
+            );
+
+            // === Gọi DAO để lưu ===
+            UserDAO userDAO = new UserDAO();
+
+            if (userDAO.findUser(email)) {
+                request.setAttribute("error", "Email đã tồn tại!");
+                request.setAttribute("step", 1);
+                request.setAttribute("formData", formData);
+                request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
+                return;
+            }
+
             boolean created = userDAO.signUp(newUser);
 
             if (created) {
-                session.removeAttribute("signupData"); 
+                session.removeAttribute("signupData");
                 request.setAttribute("message", "Đăng ký thành công! Vui lòng đăng nhập.");
                 request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
             } else {
-                // Đăng ký thất bại
                 request.setAttribute("error", "Đăng ký thất bại, vui lòng thử lại!");
-                request.setAttribute("step", 3); 
+                request.setAttribute("step", 3);
                 request.setAttribute("formData", formData);
                 request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
             }
             return;
         }
-
-        request.setAttribute("step", nextStep);
-        request.setAttribute("formData", formData); // Gửi data để điền lại form
-        request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override
