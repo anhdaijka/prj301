@@ -1,4 +1,4 @@
-
+<%-- Import JSTL Core Library (Required) --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
@@ -6,8 +6,13 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Đăng Tin Tuyển Dụng Mới</title>
+        <title>Post a New Job</title>
+
+        <%-- Tagify Library (CSS) --%>
+        <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
         <style>
+            /* (CSS của bạn giữ nguyên) */
             body {
                 font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
                 margin: 20px;
@@ -35,7 +40,7 @@
             }
             .full-width {
                 grid-column: 1 / -1;
-            } /* Class để 1 trường chiếm 2 cột */
+            }
             label {
                 display: block;
                 margin-bottom: 6px;
@@ -53,24 +58,6 @@
                 height: 120px;
                 resize: vertical;
             }
-            .skill-list {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 10px;
-                border: 1px solid #ccc;
-                padding: 10px;
-                border-radius: 5px;
-                max-height: 200px;
-                overflow-y: auto;
-            }
-            .skill-item label {
-                font-weight: normal;
-                margin-left: 5px;
-            }
-            .skill-item {
-                display: flex;
-                align-items: center;
-            }
             button {
                 width: 100%;
                 padding: 12px;
@@ -82,27 +69,35 @@
                 font-size: 16px;
                 font-weight: 600;
             }
-            button:hover {
-                background-color: #0056b3;
-            }
-
-            /* Thông báo lỗi */
             .error {
-                color: #D8000C; /* Màu đỏ đậm */
+                color: #D8000C;
                 font-weight: bold;
-                background: #FFD2D2; /* Màu nền đỏ nhạt */
+                background: #FFD2D2;
                 border: 1px solid #D8000C;
                 padding: 10px 15px;
                 border-radius: 5px;
                 text-align: center;
                 margin-bottom: 20px;
             }
+
+            /* CSS for Tagify */
+            .tagify{
+                --tag-bg: #007bff;
+                --tag-text-color: #ffffff;
+                border-radius: 5px;
+                border: 1px solid #ccc;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            .tagify__input {
+                padding: 9px 12px;
+            }
         </style>
     </head>
     <body>
 
         <div class="container">
-            <h2>Đăng Tin Tuyển Dụng Mới</h2>
+            <h2>Post a New Job</h2>
 
             <c:if test="${not empty error or not empty listError}">
                 <p class="error">
@@ -111,19 +106,21 @@
                     </p>
             </c:if>
 
-            <form action="PostJob" method="POST">
+            <form id="post-form" action="PostJobController" method="POST">
 
+                <%-- 1. Job Title (Required) --%>
                 <div class="form-group full-width">
-                    <label for="title">Tiêu đề công việc (*):</label>
+                    <label for="title">Job Title (*):</label>
                     <input type="text" id="title" name="title" value="${param.title}">
                 </div>
 
                 <div class="form-grid">
-                    <div class="form-group">
-                        <label for="categoryId">Danh mục:</label>
-                        <select id="categoryId" name="categoryId">
-                            <option value="">-- Tùy chọn (Không chọn) --</option>
 
+                    <%-- 2. Category (Required) --%>
+                    <div class="form-group">
+                        <label for="categoryId">Category (*):</label>
+                        <select id="categoryId" name="categoryId">
+                            <option value="">-- Select Category --</option>
                             <c:forEach var="cat" items="${categoryList}">
                                 <option value="${cat.id}" ${param.categoryId == cat.id ? 'selected' : ''}>
                                     ${cat.name}
@@ -132,57 +129,160 @@
                         </select>
                     </div>
 
+                    <%-- 3. Salary --%>
                     <div class="form-group">
-                        <label for="salary">Mức lương:</label>
-                        <input type="text" id="salary" name="salary" placeholder="VD: 10-15 triệu hoặc Thỏa thuận" value="${param.salary}">
+                        <label for="salary">Salary:</label>
+                        <input type="text" id="salary" name="salary" placeholder="Ex: $1000 - $1500" value="${param.salary}">
                     </div>
 
+                    <%-- 4. Location --%>
                     <div class="form-group">
-                        <label for="location">Địa điểm làm việc:</label>
-                        <input type="text" id="location" name="location" placeholder="VD: Hà Nội, TP. HCM" value="${param.location}">
+                        <label for="location">Location (*):</label>
+                        <input type="text" id="location" name="location" placeholder="Ex: Hanoi, Ho Chi Minh City" value="${param.location}">
                     </div>
 
+                    <%-- 5. End Date --%>
                     <div class="form-group">
-                        <label for="endDate">Ngày kết thúc:</label>
+                        <label for="endDate">End Date (dd/MM/yyyy):</label>
                         <input type="text" id="endDate" name="endDate" placeholder="dd/MM/yyyy" value="${param.endDate}">
                     </div>
 
+                    <%-- 6. Working Hours --%>
                     <div class="form-group">
-                        <label for="workingHours">Giờ làm việc:</label>
-                        <input type="text" id="workingHours" placeholder="VD: Giờ hành chính (T2-T6)" name="workingHours" value="${param.workingHours}">
+                        <label for="workingHours">Working Hours:</label>
+                        <input type="text" id="workingHours" name="workingHours" placeholder="Ex: Office hours (Mon-Fri)" value="${param.workingHours}">
                     </div>
 
+                    <%-- 7. Min Age --%>
                     <div class="form-group">
-                        <label for="minAge">Tuổi tối thiểu:</label>
-                        <input type="number" id="minAge" name="minAge" placeholder="Bỏ trống nếu không yêu cầu" value="${param.minAge}">
+                        <label for="minAge">Min Age:</label>
+                        <input type="number" id="minAge" name="minAge" placeholder="Leave blank if not required" value="${param.minAge}">
                     </div>
 
+                    <%-- 8. Max Age --%>
                     <div class="form-group">
-                        <label for="maxAge">Tuổi tối đa:</label>
-                        <input type="number" id="maxAge" name="maxAge" placeholder="Bỏ trống nếu không yêu cầu" value="${param.maxAge}">
+                        <label for="maxAge">Max Age:</label>
+                        <input type="number" id="maxAge" name="maxAge" placeholder="Leave blank if not required" value="${param.maxAge}">
                     </div>
-                </div> <%-- Hết .form-grid --%>
 
+                    <%-- 9. Experience Level --%>
+                    <div class="form-group">
+                        <label for="experienceLevel">Experience Level:</label>
+                        <select id="experienceLevel" name="experienceLevel">
+                            <option value="">Not Required</option>
+                            <option value="No experience" ${param.experienceLevel == 'No experience' ? 'selected' : ''}>No experience</option>
+                            <option value="Less than 1 year" ${param.experienceLevel == 'Less than 1 year' ? 'selected' : ''}>Less than 1 year</option>
+                            <option value="1-3 year" ${param.experienceLevel == '1-3 year' ? 'selected' : ''}>1-3 year</option>
+                            <option value="+3 year" ${param.experienceLevel == '+3 year' ? 'selected' : ''}>+3 year</option>
+                        </select>
+                    </div>
+
+                    <%-- 10. Degree Requirement --%>
+                    <div class="form-group">
+                        <label for="degreeRequirement">Degree Requirement:</label>
+                        <select id="degreeRequirement" name="degreeRequirement">
+                            <option value="">Not Required</option>
+                            <option value="College" ${param.degreeRequirement == 'College' ? 'selected' : ''}>College</option>
+                            <option value="University" ${param.degreeRequirement == 'University' ? 'selected' : ''}>University</option>
+                        </select>
+                    </div>
+
+                    <%-- 11. Gender Requirement --%>
+                    <div class="form-group">
+                        <label for="genderRequirement">Gender Requirement:</label>
+                        <select id="genderRequirement" name="genderRequirement">
+                            <option value="">Not Required</option>
+                            <option value="Male" ${param.genderRequirement == 'Male' ? 'selected' : ''}>Male</option>
+                            <option value="Female" ${param.genderRequirement == 'Female' ? 'selected' : ''}>Female</option>
+                        </select>
+                    </div>
+                </div> 
+
+                <%-- 12. Job Description --%>
                 <div class="form-group full-width">
-                    <label for="description">Mô tả công việc:</label>
-                    <textarea id="description" name="description">${param.description}</textarea>
+                    <label for="description">Job Description:</label>
+                    <textarea id="description" name="description" placeholder="Enter the detailed job description...">${param.description}</textarea>
                 </div>
 
+                <%-- 13. Benefits --%>
                 <div class="form-group full-width">
-                    <label>Kỹ năng yêu cầu:</label>
-                    <div class="skill-list">
-                        <c:forEach var="skill" items="${skillList}">
-                            <div class="skill-item">
-                                <input type="checkbox" id="skill_${skill.id}" name="skillIds" value="${skill.id}">
-                                <label for="skill_${skill.id}">${skill.name}</label>
-                            </div>
-                        </c:forEach>
-                    </div>
+                    <label for="benefits">Benefits:</label>
+                    <textarea id="benefits" name="benefits" placeholder="Ex: Personal laptop, Health insurance, Team building...">${param.benefits}</textarea>
                 </div>
 
-                <button type="submit" class="full-width">Đăng Tin</button>
+                <%-- 14. Other Requirements --%>
+                <div class="form-group full-width">
+                    <label for="otherRequirements">Other Requirements:</label>
+                    <textarea id="otherRequirements" name="otherRequirements" placeholder="Ex: Good communication, Driver's license...">${param.otherRequirements}</textarea>
+                </div>
+
+                <%-- 15. Required Skills (Tagify) --%>
+                <div class="form-group full-width">
+                    <label for="skills-input">Required Skills:</label>
+                    <input type="text" id="skills-input" value="${param.skills_list}">
+
+                    <%-- Hidden input to send data to Controller --%>
+                    <input type="hidden" id="skills_list" name="skills_list">
+                    <small><i>Type to search existing skills or add new skills and press Enter.</i></small>
+                </div>
+
+                <button type="submit" class="full-width">Post Job</button>
             </form>
         </div>
+
+
+        <%-- =============================================== --%>
+        <%-- JavaScript (Tagify)                             --%>
+        <%-- =============================================== --%>
+
+        <%-- 1. Add Tagify library (JS) --%>
+        <script src="https://unpkg.com/@yaireo/tagify"></script>
+        <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+
+                // --- 1. Handle Skills (Tagify) ---
+
+                // 1a. Get the skill list from JSTL (Whitelist)
+                const skillWhitelist = [
+            <c:forEach var="skill" items="${skillList}">
+                    "${skill.name}",
+            </c:forEach>
+                ];
+
+                // 1b. Get the input element
+                var input = document.getElementById('skills-input');
+
+                // 1c. Initialize Tagify
+                var tagify = new Tagify(input, {
+                    whitelist: skillWhitelist, // Suggestion list
+                    dropdown: {
+                        maxItems: 20,
+                        enabled: 0, // 0 = show dropdown on input
+                        closeOnSelect: false
+                    },
+                    // (Tagify automatically allows new tags by default)
+                });
+
+                // --- 2. Handle Form Submit ---
+                const form = document.getElementById('post-form');
+                const hiddenSkillsInput = document.getElementById('skills_list');
+
+                form.addEventListener('submit', function (e) {
+                    // When user clicks "Post Job"
+
+                    // Get all tags (as an array)
+                    const tags = tagify.value.map(tag => tag.value);
+
+                    // Join them into a single string, separated by commas
+                    // Ex: "Java,SQL,Figma"
+                    hiddenSkillsInput.value = tags.join(',');
+
+                    // (The form can now submit)
+                });
+            });
+        </script>
 
     </body>
 </html>
