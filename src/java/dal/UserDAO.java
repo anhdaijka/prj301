@@ -111,7 +111,7 @@ public class UserDAO extends DBContext {
             if (user.getRoleId() != null) {
                 stm.setString(8, user.getRoleId().toString());
             } else {
-                stm.setNull(8, Types.VARCHAR);
+                stm.setString(8, "92eb5931-6ba6-4ad9-b5bd-caf70a152246");
             }
 
             if (user.getBirthday() != null) {

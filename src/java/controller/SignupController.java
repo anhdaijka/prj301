@@ -145,16 +145,9 @@ public class SignupController extends HttpServlet {
             // Thêm các case khác nếu bạn có nhiều bước hơn
         }
 
-        // 3. Lưu lại Map vào session
         session.setAttribute("signupData", formData);
         
-        // 4. Kiểm tra xem đây có phải bước cuối cùng không (Logic từ file 1)
-        // (Giả sử bước cuối là 3, và "nextStep" sẽ là 4)
-        if (nextStep == 4) { // ĐIỀU CHỈNH SỐ 4 NÀY thành (số bước cuối + 1)
-            
-            // === BẮT ĐẦU LOGIC XỬ LÝ DATABASE (Logic từ file 2) ===
-            
-            // Lấy toàn bộ dữ liệu từ Map
+        if (nextStep == 4) {
             String email = formData.get("email");
             String password = formData.get("password");
             String name = formData.get("name");
@@ -164,7 +157,6 @@ public class SignupController extends HttpServlet {
             
             UserDAO userDAO = new UserDAO();
             
-            // 4.1. Kiểm tra Email tồn tại
             if (userDAO.findUser(email)) {
                 request.setAttribute("error", "Email đã tồn tại!");
                 request.setAttribute("step", 1); // Quay lại bước 1
@@ -180,35 +172,27 @@ public class SignupController extends HttpServlet {
                     birthday = LocalDate.parse(birthdayStr);
                 } catch (DateTimeParseException e) {
                     System.out.println("Lỗi parse ngày sinh: " + e.getMessage());
-                    // Có thể set lỗi và quay lại form
                 }
             }
 
-            // 4.3. Tạo đối tượng User (Giả sử RoleId là null khi đăng ký)
-            // (Bạn phải đảm bảo hàm signUp trong DAO xử lý việc gán RoleId mặc định)
             User newUser = new User(UUID.randomUUID(), email, password, name, phone, birthday, avatarUrl, null);
-
-            // 4.4. Gọi DAO để đăng ký
+            
             boolean created = userDAO.signUp(newUser);
 
-            // 4.5. Xử lý kết quả
             if (created) {
-                // Đăng ký thành công
-                session.removeAttribute("signupData"); // Xóa session
+                session.removeAttribute("signupData"); 
                 request.setAttribute("message", "Đăng ký thành công! Vui lòng đăng nhập.");
-                // Chuyển đến trang login (Logic từ file 1)
                 request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
             } else {
                 // Đăng ký thất bại
                 request.setAttribute("error", "Đăng ký thất bại, vui lòng thử lại!");
-                request.setAttribute("step", 3); // Quay lại bước cuối (Điều chỉnh số này)
+                request.setAttribute("step", 3); 
                 request.setAttribute("formData", formData);
                 request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
             }
-            return; // Rất quan trọng, để không chạy code bên dưới
+            return;
         }
 
-        // 5. Nếu chưa phải bước cuối, chuyển đến bước tiếp theo (Logic file 1)
         request.setAttribute("step", nextStep);
         request.setAttribute("formData", formData); // Gửi data để điền lại form
         request.getRequestDispatcher("/views/pages/auth/signup/index.jsp").forward(request, response);
