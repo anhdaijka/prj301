@@ -13,7 +13,7 @@
         </div>
 
 
-        <form action="/EmployeeManagement/signup" method="POST" onsubmit="return validatePasswords()">
+        <form action="signup" method="POST" onsubmit="return validatePasswords()">
             <input type="hidden" name="currentStep" value="1">
             <input type="hidden" name="nextStep" value="2">
             <fieldset class="fieldset">

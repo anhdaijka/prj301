@@ -13,7 +13,7 @@
         </div>
 
         <div class="mt-8">
-            <form action="/EmployeeManagement/signup" method="POST">
+            <form action="signup" method="POST">
                 <input type="hidden" name="currentStep" value="4">
 
                 <fieldset class="fieldset">

@@ -12,7 +12,7 @@
         </div>
 
         <div class="mt-8">
-            <form action="/EmployeeManagement/signup" method="POST">
+            <form action="signup" method="POST">
                 <input type="hidden" name="currentStep" value="2">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Location
