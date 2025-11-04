@@ -41,40 +41,7 @@
         </div>
     </div>
 
-    <div class="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
-        <div class="flex-1">
-            <div class="text-center">
-                <div class="flex justify-center mx-auto">
-                    <img src="https://iconape.com/wp-content/files/ww/350307/png/350307.png"  class='w-56'/>
-                </div>
-
-                <p class="mt-3 text-gray-600">Sign in to access your account</p>
-            </div>
-
-            <div class="mt-8">
-                <form>
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Email address *
-                        </legend>
-                        <input type="email" class="input w-full" placeholder="Your email here" />
-                    </fieldset>
-
-                    <fieldset class="fieldset">
-                        <legend class="fieldset-legend">Password *</legend>
-                        <input type="password" class="input w-full" placeholder="Type your password" />
-                        <a href="#" class="label text-sm text-error focus:text-warning hover:text-warning hover:underline">Forgot password?</a>
-                    </fieldset>
-
-                    <div class="mt-6 text-center">
-                        <a href="#" class="btn btn-secondary w-full">Log In</a>
-                    </div>
-
-                </form>
-
-                <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet? <a href="#" class="text-secondary focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
-            </div>
-        </div>
-    </div>
+    <jsp:include page="/views/pages/auth/signup/step4.jsp"/>
 </div>
 
 
