@@ -130,12 +130,10 @@ public class UserDAO extends DBContext {
             stm.setString(8, user.getPaymentPeriod());
             stm.setString(9, user.getResumeUrl());
 
-            // RoleId (có thể mặc định role user)
             if (user.getRoleId() != null) {
-                stm.setString(13, user.getRoleId().toString());
+                stm.setString(10, user.getRoleId().toString());
             } else {
-                // default role (ví dụ: User)
-                stm.setString(13, "92eb5931-6ba6-4ad9-b5bd-caf70a152246");
+                stm.setString(10, "e90cc62e-8cbc-4776-8601-c0c604367776");
             }
 
             int rows = stm.executeUpdate();
