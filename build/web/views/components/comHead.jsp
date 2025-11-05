@@ -1,4 +1,4 @@
-<section class="h-[25rem] w-full mb-[2.5rem]">
+<section class="h-[25rem] w-full mb-[2.5rem] bg-base-300 shadow-sm hover:shadow-md">
     <div class="relative">
         <div class="w-full h-[12.5rem]">
             <img
@@ -30,15 +30,15 @@
     <div class="text-end mt-[0.5rem]">
         <button
             data-slot="button"
-            class="inline-flex items-center justify-center gap-2 whitespace-nowrap font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50 h-10 px-6 has-[&gt;svg]:px-4 rounded-3xl mr-[1rem] ring-1 ring-primary text-primary text-lg"
+            class="btn btn-primary btn-lg btn-outline -translate-x-6"
             >
             <a href="https://anhdaik.vercel.app/contact">Get in Touch</a>
         </button>
     </div>
-    <div class="flex flex-col items-start p-4 mt-4 relative">
+    <div class="flex flex-col items-start p-4 mt-4 relative bg-base-300 rounded-box shadow-sm">
         <h1 class="text-2xl font-bold flex items-center">
             ${param.name}<span class="ml-2"
-                                 >
+                  >
 
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15M9 21v-3.375c0-.621.504-1.125 1.125-1.125h3.75c.621 0 1.125.504 1.125 1.125V21" />
@@ -46,8 +46,8 @@
 
             </span>
         </h1>
-        <span class="text-foreground/80 text-sm">@anhdaik</span>
-        <p class="mt-2">Software Engineer</p>
+        <span class="text-gray-500 text-sm">${param.email}</span>
+        <p class="mt-2 text-gray-600">@${param.name}</p>
         <div class="flex items-center gap-4 text-foreground text-sm mt-2">
             <div class="flex items-center gap-1">
                 <svg
@@ -67,7 +67,7 @@
                         d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
                         ></path>
                     <circle cx="12" cy="10" r="3"></circle></svg
-                ><span class="text-foreground/70">Hanoi, Vietnam</span>
+                ><span class="text-foreground/70">${param.location}</span>
             </div>
             <div class="flex items-center gap-1">
                 <svg
@@ -93,36 +93,38 @@
                     <path d="M8 18h.01"></path>
                     <path d="M12 18h.01"></path>
                     <path d="M16 18h.01"></path></svg
-                ><span class="text-foreground/70">01/10/2000</span>
+                ><span class="text-foreground/70">01/10/2015</span>
             </div>
         </div>
         <div class="flex items-center gap-4 text-md text-foreground mt-2">
             <p class="flex items-center gap-1">
-                <span class="font-semibold">3</span
-                ><span class="text-foreground/70">Projects</span>
+                <span class="font-semibold">39</span
+                ><span class="text-foreground/70">Jobs</span>
             </p>
             <p class="flex items-center gap-1">
-                <span class="font-semibold">9</span
-                ><span class="text-foreground/70">Months Experience</span>
+                <span class="font-semibold">99.5k</span
+                ><span class="text-foreground/70">Reviews</span>
+            </p>
+            <p class="flex items-center gap-1">
+                <span class="font-semibold">1</span
+                ><span class="text-foreground/70">Salaries</span>
             </p>
         </div>
         <ul class="flex space-x-2 absolute translate-y-12 right-4">
             <button
                 data-slot="button"
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 rounded-full size-12 cursor-pointer text-primary"
+                class="btn btn-circle btn-outline btn-primary"
                 >
                 <a target="_blank" href="https://github.com/1020phug"
                    ><svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-github"
+                        class="lucide lucide-github size-4"
                         aria-hidden="true"
                         >
                         <path
@@ -132,20 +134,19 @@
                     ></a></button
             ><button
                 data-slot="button"
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 rounded-full size-12 cursor-pointer text-primary"
+                class="btn btn-circle btn-outline btn-primary"
+
                 >
                 <a target="_blank" href="https://www.linkedin.com/in/1020phug"
                    ><svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-linkedin"
+                        class="lucide lucide-linkedin size-4" 
                         aria-hidden="true"
                         >
                         <path
@@ -156,20 +157,19 @@
                     ></a></button
             ><button
                 data-slot="button"
-                class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg:not([class*='size-'])]:size-4 shrink-0 [&amp;_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50 rounded-full size-12 cursor-pointer text-primary"
+                class="btn btn-circle btn-outline btn-primary"
+
                 >
                 <a target="_blank" href="https://instagram.com/anhdaik"
                    ><svg
                         xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
                         stroke-width="2"
                         stroke-linecap="round"
                         stroke-linejoin="round"
-                        class="lucide lucide-instagram"
+                        class="lucide lucide-instagram size-4"
                         aria-hidden="true"
                         >
                         <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>

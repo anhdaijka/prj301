@@ -11,14 +11,12 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  *
  * @author anhdaik
  */
-public class SignInController extends HttpServlet {
+public class JobController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,23 +35,13 @@ public class SignInController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignInController</title>");
+            out.println("<title>Servlet JobController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignInController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet JobController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
-
-    // Demo: danh sách tài khoản tạm (thay bằng DB thật trong dự án thật)
-    private static final Map<String, String> accounts = new HashMap<>();
-
-    @Override
-    public void init() throws ServletException {
-        accounts.put("admin@test.com", "123");
-        accounts.put("user@test.com", "abc");
-        accounts.put("test@test.com", "12345");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -68,14 +56,17 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // Nếu đã đăng nhập → chuyển sang trang chủ
-        HttpSession session = request.getSession(false);
-        if (session != null && session.getAttribute("user") != null) {
-            response.sendRedirect("index.jsp");
-            return;
+//        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String param = request.getParameter("action");
+        if (param == null || param.length() == 0 || param.isEmpty()) {
+            request.getRequestDispatcher("views/pages/job/index.jsp").forward(request, response);
+        } else {
+            if (param.equalsIgnoreCase("post")) {
+                request.getRequestDispatcher("views/pages/job/post.jsp").forward(request, response);
+            }
         }
 
-        request.getRequestDispatcher("views/pages/auth/login/").forward(request, response);
     }
 
     /**
@@ -89,27 +80,7 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-
-        // Kiểm tra tài khoản
-        if (username == null || password == null
-                || !accounts.containsKey(username)
-                || !accounts.get(username).equals(password)) {
-
-            // Sai thông tin đăng nhập
-            request.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");
-            request.getRequestDispatcher("index.jsp").forward(request, response);
-            return;
-        }
-
-        // Nếu đúng lưu user vào session
-        HttpSession session = request.getSession();
-        session.setAttribute("user", username);
-
-        // Chuyển về trang chủ
-        response.sendRedirect("/EmployeeManagement");
+        processRequest(request, response);
     }
 
     /**
