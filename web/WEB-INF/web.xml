@@ -30,6 +30,6 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>CategoryController</servlet-name>
-        <url-pattern>/category</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
