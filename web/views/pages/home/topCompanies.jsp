@@ -11,7 +11,7 @@
         <jsp:param name="sub" value="The last job offers Upload"/>
     </jsp:include>
 
-    <a href="#" class="absolute right-8 top-24 hover:underline text-secondary"> More ></a>
+    <a href="${pageContext.request.contextPath}/views/pages/company/index.jsp" class="absolute right-8 top-24 hover:underline text-secondary"> More ></a>
     <% List<String> items = Arrays.asList("ReactJS", "ExpressJS");
         pageContext.setAttribute("items", items); %>
 

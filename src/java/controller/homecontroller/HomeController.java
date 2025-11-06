@@ -2,9 +2,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller.categorycontroller;
+package controller.homecontroller;
 
 import dal.CategoryDAO;
+import dal.JobDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -15,12 +16,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
+import model.Job;
 
 /**
  *
  * @author FPT
  */
-public class CategoryController extends HttpServlet {
+public class HomeController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -75,8 +77,22 @@ public class CategoryController extends HttpServlet {
         } else {
             System.out.println("SUCCESS: Found " + categories.size() + " categories");
         }
+        
+        JobDAO jobDAO = new JobDAO();
+        List<Job> newestJobs = jobDAO.getNewestJobs(6);
+        
+        if (newestJobs == null || newestJobs.isEmpty()) {
+            System.out.println("WARNING: No jobs found!");
+            newestJobs = new ArrayList<>();
+        } else {
+            System.out.println("SUCCESS: Found " + newestJobs.size() + " newest jobs");
+            for (Job job : newestJobs) {
+                System.out.println("  - " + job.getTitle() + " at " + job.getCompanyName());
+            }
+        }
 
         request.setAttribute("categories", categories);
+        request.setAttribute("newestJobs", newestJobs);
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 

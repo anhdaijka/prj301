@@ -47,6 +47,4 @@ public class Category {
     public void setJobCount(int jobCount) {
         this.jobCount = jobCount;
     }
-
-    
 }
