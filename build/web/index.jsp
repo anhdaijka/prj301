@@ -13,7 +13,7 @@
         <jsp:include page="/static/css/styles.jsp"/>
         <title>One1 HomePage - Your skills your deal</title>
     </head>
-
+    
     <jsp:include page="/views/components/header.jsp"/>
 
     <jsp:include page="/views/pages/home/hero.jsp"/>

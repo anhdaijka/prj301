@@ -2,21 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-<<<<<<< HEAD
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/nbproject/build-impl.xml</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/ConnectDB.properties</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/index.jsp</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/static/css/styles.css</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/DBContext.java</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/js/libs/daisyui/daisyui.css</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/js/libs/daisyui/themes.css</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/js/libs/daisyui/themes.min.css</file>
-=======
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/auth/signup/index.jsp</file>
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/auth/signup/step2.jsp</file>
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/src/java/controllers/SignUpController.java</file>
->>>>>>> 64f0dc95f92797220795f027c06e756006076f7a
-        </group>
+        <group/>
     </open-files>
 </project-private>
