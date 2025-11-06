@@ -5,6 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+    if (request.getAttribute("categories") == null) {
+        response.sendRedirect(request.getContextPath() + "/category");
+        return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,17 +24,17 @@
     <jsp:include page="/views/components/header.jsp"/>
 
     <jsp:include page="/views/pages/home/hero.jsp"/>
-    
+
     <jsp:include page="/views/pages/home/popularCat.jsp"/>
-    
+
     <jsp:include page="/views/pages/home/newestJobs.jsp"/>
 
     <jsp:include page="/views/pages/home/how.jsp"/>
-    
+
     <jsp:include page="/views/pages/home/topCompanies.jsp"/>
-    
+
     <jsp:include page="/views/pages/home/conclusion.jsp"/>
-    
+
     <jsp:include page="/views/components/footer.jsp"/>
 
 </html>

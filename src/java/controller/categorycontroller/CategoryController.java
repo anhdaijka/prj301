@@ -2,9 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
+package controller.categorycontroller;
 
-import dal.UserDAO;
+import dal.CategoryDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -12,14 +12,15 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.User;
+import java.util.ArrayList;
+import java.util.List;
+import model.Category;
 
 /**
  *
  * @author FPT
  */
-public class LoginController extends HttpServlet {
+public class CategoryController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +39,10 @@ public class LoginController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
+            out.println("<title>Servlet CategoryController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CategoryController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,15 +60,24 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession(false);
-        User user = (session != null) ? (User) session.getAttribute("user") : null;
-
-        if (user == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/views/pages/auth/login/index.jsp");
-            rd.forward(request, response);
-        } else {
-            response.sendRedirect("index.jsp"); // hoặc redirectByRole(user, response);
+        //processRequest(request, response);
+        // Kiểm tra nếu đã có categories rồi thì không load lại
+        if (request.getAttribute("categories") != null) {
+            request.getRequestDispatcher("/index.jsp").forward(request, response);
+            return;
         }
+
+        CategoryDAO dao = new CategoryDAO();
+        List<Category> categories = dao.getAllCategoriesWithJobCount();
+
+        if (categories == null || categories.isEmpty()) {
+            categories = new ArrayList<>();
+        } else {
+            System.out.println("SUCCESS: Found " + categories.size() + " categories");
+        }
+
+        request.setAttribute("categories", categories);
+        request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
     /**
@@ -81,31 +91,8 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
-            request.setAttribute("Error", "Please fill in all fields!");
-            request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
-            return;
-        }
-
-        UserDAO userDAO = new UserDAO();
-        User user = userDAO.login(email, password);
-
-        if (user != null) {
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
-            session.setAttribute("userId", user.getId());
-            session.setAttribute("userName", user.getFullName());
-            session.setAttribute("userRole", user.getRoleName());
-            //response.sendRedirect("/index.jsp"); // hoặc redirectByRole(user, response);
-            response.sendRedirect(request.getContextPath() + "/index.jsp");
-        } else {
-            request.setAttribute("email", email);
-            request.setAttribute("Error", "Incorrect email or password!");
-            request.getRequestDispatcher("/views/pages/auth/login/index.jsp").forward(request, response);
-        }
+        //processRequest(request, response);
+        doGet(request, response);
     }
 
     /**
