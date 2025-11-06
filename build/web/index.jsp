@@ -9,43 +9,24 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" href="/EmployeeManagement/static/css/styles.css"/>
-        <title>Login</title>
+        <jsp:include page="/static/css/styles.jsp"/>
+        <title>One1 HomePage - Your skills your deal</title>
     </head>
-    <body>
-        
-        <%
-            String username = request.getParameter("username");
-            String password = request.getParameter("password");
-            if (username == null) username = "";
-            if (password == null) password = "";
-        %>
-        <div style="width: 100vw;display:flex;justify-content: center;align-items: center;margin-top: 10rem;flex-direction: column;">
-            <h2 style="text-align: center;">Login Page</h2>
-            <form action="Login" method="POST">
 
-                <label>Username: </label>
-                <input type="text" name="username" value="<%= username%>">
+    <jsp:include page="/views/components/header.jsp"/>
 
-                <br>
+    <jsp:include page="/views/pages/home/hero.jsp"/>
+    
+    <jsp:include page="/views/pages/home/popularCat.jsp"/>
+    
+    <jsp:include page="/views/pages/home/newestJobs.jsp"/>
 
-                <label>Password: </label>
-                <input type="password" name="password" value="<%= password%>">
+    <jsp:include page="/views/pages/home/how.jsp"/>
+    
+    <jsp:include page="/views/pages/home/topCompanies.jsp"/>
+    
+    <jsp:include page="/views/pages/home/conclusion.jsp"/>
+    
+    <jsp:include page="/views/components/footer.jsp"/>
 
-                <br>
-
-                <button type="submit">Login</button>
-
-            </form>
-        </div>
-
-        <%
-            String error = (String) request.getAttribute("error");
-            if (error == null) error = "";
-        %>
-        <div><%= error %></div>
-        <div>
-            <h1>Le Minh Phuong</h1>
-        </div>
-    </body>
 </html>
