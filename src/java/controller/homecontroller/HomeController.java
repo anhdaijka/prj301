@@ -5,6 +5,7 @@
 package controller.homecontroller;
 
 import dal.CategoryDAO;
+import dal.CompanyDAO;
 import dal.JobDAO;
 import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import model.Category;
+import model.Company;
 import model.Job;
 
 /**
@@ -71,28 +73,20 @@ public class HomeController extends HttpServlet {
 
         CategoryDAO dao = new CategoryDAO();
         List<Category> categories = dao.getAllCategoriesWithJobCount();
-
-        if (categories == null || categories.isEmpty()) {
-            categories = new ArrayList<>();
-        } else {
-            System.out.println("SUCCESS: Found " + categories.size() + " categories");
-        }
+        if (categories == null || categories.isEmpty()) categories = new ArrayList<>();
         
         JobDAO jobDAO = new JobDAO();
         List<Job> newestJobs = jobDAO.getNewestJobs(6);
+        if (newestJobs == null || newestJobs.isEmpty()) newestJobs = new ArrayList<>();
         
-        if (newestJobs == null || newestJobs.isEmpty()) {
-            System.out.println("WARNING: No jobs found!");
-            newestJobs = new ArrayList<>();
-        } else {
-            System.out.println("SUCCESS: Found " + newestJobs.size() + " newest jobs");
-            for (Job job : newestJobs) {
-                System.out.println("  - " + job.getTitle() + " at " + job.getCompanyName());
-            }
-        }
+        CompanyDAO companyDAO = new CompanyDAO();
+        List<Company> topCompanies = companyDAO.getTopCompanies(3);
+        if (topCompanies == null) topCompanies = new ArrayList<>();
 
         request.setAttribute("categories", categories);
         request.setAttribute("newestJobs", newestJobs);
+        request.setAttribute("topCompanies", topCompanies);
+        
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
 
