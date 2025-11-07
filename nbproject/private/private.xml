@@ -3,7 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/src/java/controllers/JobController.java</file>
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/job/index.jsp</file>
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/company/index.jsp</file>
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/user/index.jsp</file>
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/web/views/pages/job/detail.jsp</file>
         </group>
     </open-files>
 </project-private>

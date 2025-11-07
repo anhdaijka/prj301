@@ -38,7 +38,7 @@
                             <div class="w-full lg:w-3/12 px-4 lg:order-2 avatar flex items-center justify-center">
                                 <div class="relative rounded-full size-48 -top-1/2">
                                     <img alt="..." src="https://media.daily.dev/image/upload/s--wzOhK88f--/f_auto/v1724228753/avatars/avatar_nyNDZ2Trf7sk4FgOodgWN" 
-                                       >
+                                         >
                                 </div>
                             </div>
                             <div class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
@@ -51,13 +51,13 @@
                             <div class="w-full lg:w-4/12 px-4 lg:order-1">
                                 <div class="flex justify-center py-4 lg:pt-4 pt-8">
                                     <div class="mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Friends</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Jobs</span>
                                     </div>
                                     <div class="mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span class="text-sm text-blueGray-400">Photos</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10.8k</span><span class="text-sm text-blueGray-400">Reviews</span>
                                     </div>
                                     <div class="lg:mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span class="text-sm text-blueGray-400">Comments</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89.8k</span><span class="text-sm text-blueGray-400">Salaries</span>
                                     </div>
                                 </div>
                             </div>
@@ -94,17 +94,75 @@
                     </div>
                 </div>
             </div>
-            <footer class="relative bg-blueGray-200 pt-8 pb-6 mt-8">
-                <div class="container mx-auto px-4">
-                    <div class="flex flex-wrap items-center md:justify-between justify-center">
-                        <div class="w-full md:w-6/12 px-4 mx-auto text-center">
-                            <div class="text-sm text-blueGray-500 font-semibold py-1">
-                                Made with <a href="https://www.creative-tim.com/product/notus-js" class="text-blueGray-500 hover:text-gray-800" target="_blank">Notus JS</a> by <a href="https://www.creative-tim.com" class="text-blueGray-500 hover:text-blueGray-800" target="_blank"> Creative Tim</a>.
-                            </div>
-                        </div>
+            <!-- name of each tab group should be unique -->
+            <div class="container mx-auto px-4">
+                <div class="bg-base-100 p-4 rounded-box shadow-sm flex flex-col gap-6">
+                    <div role="tablist" class="tabs tabs-border">
+                        <a role="tab" class="tab tab-active about">About Company</a>
+                        <a role="tab" class="tab people">People</a>
+                        <a role="tab" class="tab overview">Overview</a>
+                        <a role="tab" class="tab jobs">Jobs</a>
                     </div>
+
+                    <p class="" id="content"></p>
                 </div>
-            </footer>
+            </div>
+
+            <script>
+                let tabs = document.querySelectorAll("a.tab");
+                let activeTabs = document.querySelectorAll("a.tab.tab-active");
+                let contentTab = document.querySelector("#content");
+                let contents = [
+                    {
+                        name: "about",
+                        contents: "About company"
+                    }, {
+                        name: "people",
+                        contents: "People at here"
+                    }, {
+                        name: "overview",
+                        contents: "Overview about company"
+                    }, {
+                        name: "jobs",
+                        contents: "Jobs at here"
+                    },
+                ];
+
+                let activeTab = document.querySelector("a.tab.tab-active");
+                
+                
+                //Default content
+                let setContent = () => {
+                    activeTab = document.querySelector("a.tab.tab-active");
+
+                    contents.forEach((content) => {
+                        if (activeTab.classList.contains(content.name)) {
+                            contentTab.innerHTML = content.contents;
+                        }
+                    })
+                }
+                
+                setContent();
+
+                tabs.forEach((tab) => {
+                    tab.addEventListener('click', () => {
+                        //Xoa tab active hien tai
+                        activeTabs.forEach((activeTab) => {
+                            activeTab.classList.remove("tab-active");
+                        })
+                        //Them tab active cho tab moi
+                        tab.classList.add("tab-active");
+                        //Reset buton
+                        activeTabs = document.querySelectorAll("a.tab.tab-active");
+
+                        //Set lai content
+                        setContent();
+
+
+                    })
+                });
+
+            </script>
         </section>
     </section>
 
