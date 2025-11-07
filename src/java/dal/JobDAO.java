@@ -65,17 +65,17 @@ public class JobDAO extends DBContext {
         
         String sql = """
             SELECT 
-                j.Id, j.Title, j.Description, j.Salary, j.Location, 
-                j.EndDate, j.Status, j.CompanyId, j.CategoryId,
-                c.Name AS CompanyName, c.Logo AS CompanyLogo,
-                cat.Name AS CategoryName,
-                DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
-            FROM Jobs j
-            LEFT JOIN Companies c ON j.CompanyId = c.Id
-            LEFT JOIN Categories cat ON j.CategoryId = cat.Id
-            WHERE j.Status = 'Active'
-            ORDER BY j.EndDate DESC
-            OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+                            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+                            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+                            cat.Name AS CategoryName,
+                            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+                        FROM Jobs j
+                        LEFT JOIN Companies c ON j.CompanyId = c.Id
+                        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+                        WHERE j.Status = 'True'
+                        ORDER BY j.EndDate DESC
+                        OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
         """;
         
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
@@ -192,7 +192,7 @@ public class JobDAO extends DBContext {
     }
     
     public int getTotalJobs() {
-        String sql = "SELECT COUNT(*) FROM Jobs WHERE Status = 'Active'";
+        String sql = "SELECT COUNT(*) FROM Jobs WHERE Status = 'True'";
         
         try (PreparedStatement stm = connection.prepareStatement(sql);
              ResultSet rs = stm.executeQuery()) {
@@ -211,18 +211,18 @@ public class JobDAO extends DBContext {
     public List<Job> searchJobs(String keyword) {
         List<Job> jobs = new ArrayList<>();
         String sql = """
-            SELECT 
-                j.Id, j.Title, j.Description, j.Salary, j.Location, 
-                j.EndDate, j.Status, j.CompanyId, j.CategoryId,
-                c.Name AS CompanyName, c.Logo AS CompanyLogo,
-                cat.Name AS CategoryName,
-                DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
-            FROM Jobs j
-            LEFT JOIN Companies c ON j.CompanyId = c.Id
-            LEFT JOIN Categories cat ON j.CategoryId = cat.Id
-            WHERE j.Status = 'Active' 
-                AND (j.Title LIKE ? OR j.Description LIKE ? OR c.Name LIKE ?)
-            ORDER BY j.EndDate DESC
+             SELECT 
+                            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+                            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+                            cat.Name AS CategoryName,
+                            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+                        FROM Jobs j
+                        LEFT JOIN Companies c ON j.CompanyId = c.Id
+                        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+                        WHERE j.Status = 'True' 
+                            AND (j.Title LIKE ? OR j.Description LIKE ? OR c.Name LIKE ?)
+                        ORDER BY j.EndDate DESC
         """;
         
         try (PreparedStatement stm = connection.prepareStatement(sql)) {

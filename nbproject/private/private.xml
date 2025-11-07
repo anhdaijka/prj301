@@ -3,6 +3,7 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/newestJobs.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/header.jsp</file>
@@ -42,6 +43,9 @@
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step1.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/job/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/footer.jsp</file>
+=======
+            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/src/java/controllers/JobController.java</file>
+>>>>>>> 7f3d098fbfba033beee6ce00dc6de220b176ef7c
         </group>
     </open-files>
 </project-private>
