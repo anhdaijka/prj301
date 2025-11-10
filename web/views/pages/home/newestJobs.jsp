@@ -20,7 +20,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <c:forEach var="c" items="${requestScope.newestJobs}">
                 <jsp:include page="/views/components/jobCard.jsp">
-                    <jsp:param name="link" value="#"/>
+                    <jsp:param name="link" value="${pageContext.request.contextPath}/jobDetail?id=${job.id}"/>
                     <jsp:param name="src" value="${c.companyLogo}"/>
                     <jsp:param name="company" value="${c.companyName}"/>
                     <jsp:param name="title" value="${c.title}"/>
