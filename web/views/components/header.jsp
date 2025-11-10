@@ -21,8 +21,8 @@
     <div class="navbar-center hidden lg:flex">
         <ul class="menu menu-horizontal px-1">
             <li><a href="/EmployeeManagement/">Home</a></li>
-            <li><a href="/EmployeeManagement/views/pages/jobs.jsp">Find job</a></li>
-            <li><a href="/EmployeeManagement/views/pages/company.jsp">Company</a></li>
+            <li><a href="/EmployeeManagement/job">Find job</a></li>
+            <li><a href="/EmployeeManagement/company">Company</a></li>
         </ul>
     </div>
 
