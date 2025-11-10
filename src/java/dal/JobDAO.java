@@ -181,47 +181,8 @@ public class JobDAO extends DBContext {
         }
     }
 
-    private int findSkillByName(String skillName) throws SQLException {
-        if (skillName == null) {
-            return 0;
-        }
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-
-        try {
-            String sql = "SELECT id FROM skills WHERE UPPER(name) = UPPER(?)";
-            ps = connection.prepareStatement(sql);
-            ps.setString(1, skillName.trim());
-            rs = ps.executeQuery();
-
-            if (rs.next()) {
-                return rs.getInt("id");
-            }
-            return 0;
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
-        }
-    }
-
-    // create skill if not find
+    // create skill
     public int createSkill(String skillName) throws SQLException {
-
-        // if find -> return 
-        int id = findSkillByName(skillName);
-        if (id != 0) {
-            if (connection != null) {
-                connection.close();
-            }
-            return id;
-        }
-
         PreparedStatement ps = null;
         ResultSet rs = null;
 

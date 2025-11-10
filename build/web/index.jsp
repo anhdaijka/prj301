@@ -13,7 +13,11 @@
         <jsp:include page="/static/css/styles.jsp"/>
         <title>One1 HomePage - Your skills your deal</title>
     </head>
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> eccff52094ec0015489419bec57d338bc3dfd959
     <jsp:include page="/views/components/header.jsp"/>
 
     <jsp:include page="/views/pages/home/hero.jsp"/>
@@ -30,4 +34,8 @@
 
     <jsp:include page="/views/components/footer.jsp"/>
 
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> eccff52094ec0015489419bec57d338bc3dfd959

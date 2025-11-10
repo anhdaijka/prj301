@@ -1,92 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
+        <servlet-name>PostJobController</servlet-name>
+        <servlet-class>controllers.PostJobController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PostJobController</servlet-name>
+        <url-pattern>/PostJob</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>LoginController</servlet-name>
         <servlet-class>controllers.LoginController</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>LoginController1</servlet-name>
-        <servlet-class>controllers.LoginController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountListController</servlet-name>
-        <servlet-class>controllers.AccountListController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountDetailsController</servlet-name>
-        <servlet-class>controllers.AccountDetailsController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountCreateController</servlet-name>
-        <servlet-class>controllers.AccountCreateController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountEditController</servlet-name>
-        <servlet-class>controllers.AccountEditController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>AccountDeleteController</servlet-name>
-        <servlet-class>controllers.AccountDeleteController</servlet-class>
+        <servlet-name>SignupController</servlet-name>
+        <servlet-class>controllers.SignupController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
         <servlet-class>controllers.LogoutController</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>PostJobController</servlet-name>
-        <servlet-class>controller.PostJobController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SignUpController</servlet-name>
-        <servlet-class>controllers.SignUpController</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>SignInController</servlet-name>
-        <servlet-class>controllers.SignInController</servlet-class>
-    </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
-        <url-pattern>/LoginController</url-pattern>
+        <url-pattern>/login</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>LoginController1</servlet-name>
-        <url-pattern>/Login</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountListController</servlet-name>
-        <url-pattern>/Accounts</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountDetailsController</servlet-name>
-        <url-pattern>/AccountDetails</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountCreateController</servlet-name>
-        <url-pattern>/AccountCreate</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountEditController</servlet-name>
-        <url-pattern>/AccountEdit</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>AccountDeleteController</servlet-name>
-        <url-pattern>/AccountDelete</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>LogoutController</servlet-name>
-        <url-pattern>/Logout</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>PostJobController</servlet-name>
-        <url-pattern>/PostJob</url-pattern>
-    </servlet-mapping>
-  
-    <servlet-mapping>
-        <servlet-name>SignUpController</servlet-name>
+        <servlet-name>SignupController</servlet-name>
         <url-pattern>/signup</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>SignInController</servlet-name>
-        <url-pattern>/login</url-pattern>
+        <servlet-name>LogoutController</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>
