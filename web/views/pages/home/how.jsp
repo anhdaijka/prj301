@@ -6,7 +6,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@page import="java.util.*" %>
 <div class="min-h-[50vh] w-full py-12 relative">
-    <jsp:include page="/views/layouts/heading.jsp">
+    <jsp:include page="/views/components/heading.jsp">
         <jsp:param name="title" value="Steps to Your Dream Job"/>
         <jsp:param name="sub" value="The last job offers Upload"/>
     </jsp:include>
