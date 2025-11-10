@@ -62,25 +62,24 @@ public class SearchJobController extends HttpServlet {
         //processRequest(request, response);
         JobDAO dao = new JobDAO();
         String keyword = request.getParameter("keyword");
-        List<Job> jobs = new ArrayList<>();
 
-        // Kiểm tra keyword
+        List<Job> jobs = new ArrayList<>();
         if (keyword != null && !keyword.trim().isEmpty()) {
             jobs = dao.searchJobs(keyword.trim());
         } else {
-            jobs = dao.getAllJobs(1, 50); 
+            jobs = dao.getAllJobs(1, 50);
         }
 
         if (jobs == null) {
             jobs = new ArrayList<>();
         }
 
-        // Set attributes
+        System.out.println("Final jobs size: " + jobs.size());
+
         request.setAttribute("jobs", jobs);
         request.setAttribute("keyword", keyword);
         request.setAttribute("totalJobs", jobs.size());
 
-        // Forward to result page
         request.getRequestDispatcher("/views/pages/job/index.jsp").forward(request, response);
     }
 

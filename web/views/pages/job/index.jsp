@@ -1,4 +1,3 @@
-
 <%-- 
     Document   : index
     Created on : Sep 30, 2025, 1:10:11 PM
@@ -7,6 +6,13 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% 
+    if (request.getAttribute("jobs") == null) {
+        response.sendRedirect(request.getContextPath() + "/search");
+         return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -30,7 +36,7 @@
                         <input class="input join-item min-w-[300px] md:min-w-md" 
                                placeholder="Job title or keywords" 
                                name="keyword"
-                               value="${not empty keyword ? keyword : ''}"/>
+                               value="${not empty keyword ? keyword : ""}"/>
                     </div>
                     <div class="indicator">
                         <button type="submit" class="btn join-item">
@@ -58,7 +64,7 @@
             </div>
 
             <!-- Job List -->
-            <div class="flex-1 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
+            <div class="flex-1 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4 w-full">
                 <c:choose>
                     <c:when test="${not empty jobs}">
                         <c:forEach var="job" items="${jobs}">
@@ -102,9 +108,8 @@
                     </c:otherwise>
                 </c:choose>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <jsp:include page="/views/components/footer.jsp"/>
-</body>
+        <jsp:include page="/views/components/footer.jsp"/>
+    </body>
 </html>

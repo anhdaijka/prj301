@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-<<<<<<< HEAD
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/nbproject/build-impl.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/newestJobs.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/header.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/topCompanies.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/model/Job.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/JobDAO.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/model/Company.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/controller/findjobcontroller/SearchJobController.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/stepCard.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step4.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/comHead.jsp</file>
@@ -17,6 +18,7 @@
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/controller/authcategory/LoginController.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/ConnectDB.properties</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/toast.jsp</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/user/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/popularCat.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/WEB-INF/web.xml</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/categoryCard.jsp</file>
@@ -24,17 +26,20 @@
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/CategoryDAO.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/static/css/styles.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/model/Category.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/job/search.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step3.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step2.jsp</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/CompanyDAO.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/conclusion.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/controller/authcategory/SignupController.java</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/company/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/UserDAO.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/login/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/controller/homecontroller/HomeController.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/jobCard.jsp</file>
-            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/search/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/heading.jsp</file>
+            <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/job/post.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/src/java/dal/DBContext.java</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/home/how.jsp</file>
@@ -43,9 +48,6 @@
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/auth/signup/step1.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/pages/job/index.jsp</file>
             <file>file:/C:/Users/FPT/OneDrive/Desktop/Hoc_FPT/Hoc_ky_3/LAB211/prj301/web/views/components/footer.jsp</file>
-=======
-            <file>file:/D:/Documents/FPT/FALL2025/PRJ301/EmployeeManagement/src/java/controllers/JobController.java</file>
->>>>>>> 7f3d098fbfba033beee6ce00dc6de220b176ef7c
         </group>
     </open-files>
 </project-private>

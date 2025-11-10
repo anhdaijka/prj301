@@ -65,7 +65,6 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         //processRequest(request, response);
-        // Kiểm tra nếu đã có categories rồi thì không load lại
         if (request.getAttribute("categories") != null) {
             request.getRequestDispatcher("/index.jsp").forward(request, response);
             return;
