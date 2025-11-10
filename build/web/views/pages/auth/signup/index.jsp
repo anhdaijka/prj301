@@ -75,7 +75,6 @@
                 </c:otherwise>
             </c:choose>
         </div>
-
     </body>
 
 

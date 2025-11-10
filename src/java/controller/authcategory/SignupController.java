@@ -65,25 +65,21 @@ public class SignupController extends HttpServlet {
         HttpSession session = request.getSession(false);
         User user = (session != null) ? (User) session.getAttribute("user") : null;
 
-        // 1. Nếu đã đăng nhập, không cho đăng ký nữa, chuyển về trang chủ.
         if (user != null) {
             response.sendRedirect(request.getContextPath() + "/index.jsp");
             return;
         }
-
-        // 2. Logic hiển thị step
         String stepParam = request.getParameter("step");
-        int step = 1; // Mặc định là step 1
+        int step = 1;
 
         if (stepParam != null) {
             try {
                 step = Integer.parseInt(stepParam);
             } catch (NumberFormatException e) {
-                step = 1; // Nếu param "step" không hợp lệ, quay về bước 1
+                step = 1; 
             }
         }
 
-        // Lấy dữ liệu form cũ từ session (nếu có) để điền lại
         if (session != null) {
             Map<String, String> formData = (Map<String, String>) session.getAttribute("signupData");
             if (formData != null) {
@@ -121,7 +117,6 @@ public class SignupController extends HttpServlet {
             currentStep = Integer.parseInt(request.getParameter("currentStep"));
             nextStep = Integer.parseInt(request.getParameter("nextStep"));
         } catch (NumberFormatException e) {
-            System.out.println("Lỗi parsing step: " + e.getMessage());
             response.sendRedirect(request.getContextPath() + "/signup?step=1");
             return;
         }
@@ -130,6 +125,7 @@ public class SignupController extends HttpServlet {
                 formData.put("fullname", request.getParameter("fullname"));
                 formData.put("email", request.getParameter("email"));
                 formData.put("password", request.getParameter("password"));
+                formData.put("roleId", request.getParameter("roleId"));
                 break;
             case 2:
                 formData.put("location", request.getParameter("location"));
@@ -150,6 +146,7 @@ public class SignupController extends HttpServlet {
             String fullName = formData.get("fullname");
             String email = formData.get("email");
             String password = formData.get("password");
+            String roleId = formData.get("roleId");
             String location = formData.get("location");
             String postalCode = formData.get("postalcode");
             String amount = formData.get("amount");      // lương tối thiểu
@@ -169,7 +166,9 @@ public class SignupController extends HttpServlet {
                 }
             }
 
-            UUID defaultRoleId = UUID.fromString("e90cc62e-8cbc-4776-8601-c0c604367776");
+            UUID defaultRoleId;
+            if (roleId.equals("1")) defaultRoleId = UUID.fromString("e90cc62e-8cbc-4776-8601-c0c604367776");
+            else defaultRoleId = UUID.fromString("a27fa4f9-d2b0-41fe-9166-0d50ed3a2173");
 
             User newUser = new User(UUID.randomUUID(), fullName, email, password, location, postalCode, minimumSalary, payment, resumeUrl, avatarUrl, phone, birthday, defaultRoleId);
 

@@ -8,7 +8,6 @@
  */
 package dal;
 
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -44,9 +43,9 @@ public class UserDAO extends DBContext {
     public User login(String email, String password) {
         User user = null;
         String sql = "SELECT u.*, r.Name AS Role\n"
-                + "                  FROM Users u \n"
-                + "                  JOIN Roles r ON u.roleId = r.id \n"
-                + "                  WHERE u.Email = ? AND u.Password = ?";
+                + "FROM Users u \n"
+                + "JOIN Roles r ON u.roleId = r.id \n"
+                + "WHERE u.Email = ? AND u.Password = ?";
 
         if (connection == null) {
             System.out.println("Database connection is null! Check DBContext or properties file.");
@@ -120,7 +119,6 @@ public class UserDAO extends DBContext {
             stm.setString(5, user.getLocation());
             stm.setString(6, user.getPostalCode());
 
-            // MinimumSalary (có thể null)
             if (user.getMinimumSalary() != null) {
                 stm.setInt(7, user.getMinimumSalary());
             } else {
@@ -129,12 +127,7 @@ public class UserDAO extends DBContext {
 
             stm.setString(8, user.getPaymentPeriod());
             stm.setString(9, user.getResumeUrl());
-
-            if (user.getRoleId() != null) {
-                stm.setString(10, user.getRoleId().toString());
-            } else {
-                stm.setString(10, "e90cc62e-8cbc-4776-8601-c0c604367776");
-            }
+            stm.setString(10, user.getRoleId().toString());
 
             int rows = stm.executeUpdate();
             return rows > 0;

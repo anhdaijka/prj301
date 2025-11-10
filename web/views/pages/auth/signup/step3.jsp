@@ -1,9 +1,9 @@
 <div class="flex items-center w-full px-6 lg:w-[40%]">
     <div class="flex-1">
         <div class="text-center">
-            <div class="flex justify-center mx-auto">
+            <a href="/EmployeeManagement" class="flex justify-center mx-auto">
                 <img src="https://iconape.com/wp-content/files/ww/350307/png/350307.png"  class='w-56'/>
-            </div>
+            </a>
 
             <jsp:include page="/views/components/heading.jsp">
                 <jsp:param name="title" value="How much is the mininum salary You want?"/>

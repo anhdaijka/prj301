@@ -105,7 +105,7 @@ public class JobDAO extends DBContext {
             SELECT 
                 j.Id, j.Title, j.Description, j.Salary, j.Location, 
                 j.EndDate, j.Status, j.CompanyId, j.CategoryId, j.UserId,
-                c.Name AS CompanyName, c.Logo AS CompanyLogo,
+                c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
                 cat.Name AS CategoryName,
                 DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
             FROM Jobs j

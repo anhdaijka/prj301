@@ -1,0 +1,92 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package model;
+
+import java.util.Date;
+
+/**
+ *
+ * @author FPT
+ */
+public class Application {
+
+    private String id;
+    private String userId;
+    private String jobId;
+    private String status;
+    private String note;
+    private String cvSnapshot;
+    private Date appliedAt;
+
+    public Application() {
+    }
+
+    public Application(String id, String userId, String jobId, String status, String note, String cvSnapshot, Date appliedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.jobId = jobId;
+        this.status = status;
+        this.note = note;
+        this.cvSnapshot = cvSnapshot;
+        this.appliedAt = appliedAt;
+    }
+
+    // Getters and Setters
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(String jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public String getCvSnapshot() {
+        return cvSnapshot;
+    }
+
+    public void setCvSnapshot(String cvSnapshot) {
+        this.cvSnapshot = cvSnapshot;
+    }
+
+    public Date getAppliedAt() {
+        return appliedAt;
+    }
+
+    public void setAppliedAt(Date appliedAt) {
+        this.appliedAt = appliedAt;
+    }
+}
