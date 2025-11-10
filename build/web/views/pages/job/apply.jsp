@@ -46,9 +46,7 @@
 
             <section class="relative py-16 bg-base-200 w-full">
                 <div class="container mx-auto px-4">
-                    
                     <c:choose>
-                        
                         <c:when test="${not empty job}">
                             <div class="relative flex flex-col min-w-0 break-words bg-base-100 w-full mb-6 shadow-xl rounded-lg -mt-64 max-w-3xl mx-auto">
                                 <div class="px-6 py-10 md:px-12 md:py-12">
