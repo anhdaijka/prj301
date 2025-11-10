@@ -64,7 +64,7 @@ public class PostJobController extends HttpServlet {
                 String genderRequirement = request.getParameter("genderRequirement");
                 String description = request.getParameter("description");
                 String[] skillsStr = request.getParameterValues("skillIds");
-                String skillOther = request.getParameter("skillOther");
+
 
                 JobDAO dao = new JobDAO();
                 List<Integer> skillIds = new ArrayList<>();
@@ -75,14 +75,6 @@ public class PostJobController extends HttpServlet {
                         int id = Integer.parseInt(skillStr);
                         skillIds.add(id);
                     }
-                }
-                if (skillOther != null && !skillOther.isEmpty()) {
-                    String[] createSkillList = skillOther.split(",");
-                    for (String skill : createSkillList) {
-                        int id = dao.createSkill(skill.trim());
-                        skillIds.add(id);
-                    }
-
                 }
 
                 Integer minAge = null;

@@ -4,6 +4,18 @@
         <servlet-name>PostJobController</servlet-name>
         <servlet-class>controllers.PostJobController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>DeleteJobController</servlet-name>
+        <servlet-class>controllers.DeleteJobController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ListJobController</servlet-name>
+        <servlet-class>controllers.ListJobController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateJobController</servlet-name>
+        <servlet-class>controllers.UpdateJobController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>PostJobController</servlet-name>
         <url-pattern>/PostJob</url-pattern>
@@ -31,5 +43,17 @@
     <servlet-mapping>
         <servlet-name>LogoutController</servlet-name>
         <url-pattern>/logout</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteJobController</servlet-name>
+        <url-pattern>/DeleteJob</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ListJobController</servlet-name>
+        <url-pattern>/ListJob</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateJobController</servlet-name>
+        <url-pattern>/UpdateJob</url-pattern>
     </servlet-mapping>
 </web-app>
