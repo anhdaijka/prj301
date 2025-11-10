@@ -46,6 +46,7 @@
                 <input type="hidden" name="action" value="create"/>
                 <input name="name" placeholder="Company Name" class="input w-full"/>
                 <input name="email" placeholder="Email" class="input w-full"/>
+                <input name="text" placeholder="Phone" class="input w-full"/>
                 <input name="address" placeholder="Address" class="input w-full col-span-2"/>
                 <button class="col-span-2 btn btn-secondary">Add Company</button>
             </form>
