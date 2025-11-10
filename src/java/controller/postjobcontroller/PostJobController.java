@@ -108,7 +108,7 @@ public class PostJobController extends HttpServlet {
             if (success) {
                 response.sendRedirect("views/pages/job/manage.jsp?success=true");
             } else {
-                throw new Exception("Unable to post job at this time. Try again!");
+                throw new Exception("Post Job fail. Please try again!!");
             }
 
         } catch (NumberFormatException e) {

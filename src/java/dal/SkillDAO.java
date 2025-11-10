@@ -13,7 +13,7 @@ public class SkillDAO extends DBContext {
     public List<Skill> getAllSkills() {
         List<Skill> skills = new ArrayList<>();
 
-        String sql = "SELECT * FROM Skills ORDER BY name";
+        String sql = "SELECT * FROM Skills ORDER BY Name";
 
         try (PreparedStatement stm = connection.prepareStatement(sql); ResultSet rs = stm.executeQuery()) {
 
@@ -27,6 +27,8 @@ public class SkillDAO extends DBContext {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return skills;
     }

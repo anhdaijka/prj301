@@ -1,9 +1,7 @@
 package dal;
 
 import java.sql.Date;
-import model.Category;
 import model.Job;
-import model.Skill;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
