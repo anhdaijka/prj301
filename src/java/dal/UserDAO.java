@@ -120,7 +120,6 @@ public class UserDAO extends DBContext {
             stm.setString(5, user.getLocation());
             stm.setString(6, user.getPostalCode());
 
-            // MinimumSalary (có thể null)
             if (user.getMinimumSalary() != null) {
                 stm.setInt(7, user.getMinimumSalary());
             } else {
@@ -129,12 +128,13 @@ public class UserDAO extends DBContext {
 
             stm.setString(8, user.getPaymentPeriod());
             stm.setString(9, user.getResumeUrl());
+            stm.setString(10, user.getRoleId().toString());
 
-            if (user.getRoleId() != null) {
+            /*if (user.getRoleId() != null) {
                 stm.setString(10, user.getRoleId().toString());
             } else {
                 stm.setString(10, "e90cc62e-8cbc-4776-8601-c0c604367776");
-            }
+            }*/
 
             int rows = stm.executeUpdate();
             return rows > 0;
