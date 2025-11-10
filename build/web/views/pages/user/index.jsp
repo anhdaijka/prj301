@@ -51,13 +51,13 @@
                             <div class="w-full lg:w-4/12 px-4 lg:order-1">
                                 <div class="flex justify-center py-4 lg:pt-4 pt-8">
                                     <div class="mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Jobs</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span><span class="text-sm text-blueGray-400">Friends</span>
                                     </div>
                                     <div class="mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10.8k</span><span class="text-sm text-blueGray-400">Reviews</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span><span class="text-sm text-blueGray-400">Photos</span>
                                     </div>
                                     <div class="lg:mr-4 p-3 text-center">
-                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89.8k</span><span class="text-sm text-blueGray-400">Salaries</span>
+                                        <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span><span class="text-sm text-blueGray-400">Comments</span>
                                     </div>
                                 </div>
                             </div>
@@ -98,10 +98,10 @@
             <div class="container mx-auto px-4">
                 <div class="bg-base-100 p-4 rounded-box shadow-sm flex flex-col gap-6">
                     <div role="tablist" class="tabs tabs-border">
-                        <a role="tab" class="tab tab-active about">About Company</a>
-                        <a role="tab" class="tab people">People</a>
+                        <a role="tab" class="tab tab-active about">About User</a>
+                        <a role="tab" class="tab skills">Skills</a>
                         <a role="tab" class="tab overview">Overview</a>
-                        <a role="tab" class="tab jobs">Jobs</a>
+                        <a role="tab" class="tab experience">Experience</a>
                     </div>
 
                     <p class="" id="content"></p>
@@ -110,27 +110,25 @@
 
             <script>
                 let tabs = document.querySelectorAll("a.tab");
+                let activeTab = document.querySelector("a.tab.tab-active");
                 let activeTabs = document.querySelectorAll("a.tab.tab-active");
                 let contentTab = document.querySelector("#content");
                 let contents = [
                     {
                         name: "about",
-                        contents: "About company"
+                        contents: "About user"
                     }, {
-                        name: "people",
-                        contents: "People at here"
+                        name: "skills",
+                        contents: "what's skill"
                     }, {
                         name: "overview",
-                        contents: "Overview about company"
+                        contents: "Overview about user"
                     }, {
-                        name: "jobs",
-                        contents: "Jobs at here"
+                        name: "experience",
+                        contents: "Experience at here"
                     },
                 ];
 
-                let activeTab = document.querySelector("a.tab.tab-active");
-                
-                
                 //Default content
                 let setContent = () => {
                     activeTab = document.querySelector("a.tab.tab-active");
