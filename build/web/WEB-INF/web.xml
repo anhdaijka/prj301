@@ -2,19 +2,19 @@
 <web-app version="6.0" xmlns="https://jakarta.ee/xml/ns/jakartaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_0.xsd">
     <servlet>
         <servlet-name>PostJobController</servlet-name>
-        <servlet-class>controllers.PostJobController</servlet-class>
+        <servlet-class>controller.postjobcontroller.PostJobController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>DeleteJobController</servlet-name>
-        <servlet-class>controllers.DeleteJobController</servlet-class>
+        <servlet-class>controller.managejob.DeleteJobController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ListJobController</servlet-name>
-        <servlet-class>controllers.ListJobController</servlet-class>
+        <servlet-class>controller.managejob.ListJobController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>UpdateJobController</servlet-name>
-        <servlet-class>controllers.UpdateJobController</servlet-class>
+        <servlet-class>controller.managejob.UpdateJobController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>PostJobController</servlet-name>
@@ -22,15 +22,35 @@
     </servlet-mapping>
     <servlet>
         <servlet-name>LoginController</servlet-name>
-        <servlet-class>controllers.LoginController</servlet-class>
+        <servlet-class>controller.authcategory.LoginController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignupController</servlet-name>
-        <servlet-class>controllers.SignupController</servlet-class>
+        <servlet-class>controller.authcategory.SignupController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LogoutController</servlet-name>
-        <servlet-class>controllers.LogoutController</servlet-class>
+        <servlet-class>controller.authcategory.LogoutController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeController</servlet-name>
+        <servlet-class>controller.homecontroller.HomeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JobController</servlet-name>
+        <servlet-class>controller.homecontroller.JobController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>SearchJobController</servlet-name>
+        <servlet-class>controller.findjobcontroller.SearchJobController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JobDetailServlet</servlet-name>
+        <servlet-class>controller.findjobcontroller.JobDetailServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ApplyController</servlet-name>
+        <servlet-class>controller.applyjob.ApplyController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>LoginController</servlet-name>
@@ -56,4 +76,23 @@
         <servlet-name>UpdateJobController</servlet-name>
         <url-pattern>/UpdateJob</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeController</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SearchJobController</servlet-name>
+        <url-pattern>/search</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JobDetailServlet</servlet-name>
+        <url-pattern>/jobDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ApplyController</servlet-name>
+        <url-pattern>/apply</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
 </web-app>

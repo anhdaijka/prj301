@@ -6,6 +6,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<% 
+    if (request.getAttribute("categories") == null || request.getAttribute("newestJobs") == null) {
+        response.sendRedirect(request.getContextPath() + "/home");
+         return;
+    }
+%>
+
 <!DOCTYPE html>
 <html>
     <head>

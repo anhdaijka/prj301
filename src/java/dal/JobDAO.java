@@ -1,8 +1,7 @@
 package dal;
 
-import model.Category;
+import java.sql.Date;
 import model.Job;
-import model.Skill;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -11,191 +10,90 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.sql.Timestamp;
 
 public class JobDAO extends DBContext {
 
-    // get all categories
-    public List<Category> getAllCategories() {
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        List<Category> categories = new ArrayList<>();
+    private UUID insertJob(Job job) throws SQLException {
 
-        try {
-            String sql = "SELECT id, name FROM categories ORDER BY name";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
+        String sqlJob = "INSERT INTO jobs (Title, Description, Salary, Location, EndDate, "
+                + "Status, UserId, CompanyId, CategoryId, Working_Hours, Min_Age, Max_Age, "
+                + "Experience_Level, Degree_Requirement, Gender_Requirement, Benefits, Other_Requirements, Created_At) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"; // 18 tham số
 
-            while (rs.next()) {
-                Category category = new Category();
-                category.setId(rs.getInt("id"));
-                category.setName(rs.getString("name"));
-                categories.add(category);
-            }
+        UUID newJobId = null;
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return categories;
-    }
-
-    // get all skills
-    public List<Skill> getAllSkills() {
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        List<Skill> skills = new ArrayList<>();
-
-        try {
-            String sql = "SELECT id, name FROM skills ORDER BY name";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
-
-            while (rs.next()) {
-                Skill skill = new Skill();
-                skill.setId(rs.getInt("id"));
-                skill.setName(rs.getString("name"));
-                skills.add(skill);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return skills;
-    }
-
-    // insert into table job
-    private int insertJob(Job job) throws SQLException {
-        String sqlJob = "INSERT INTO jobs (title, description, salary, location, endDate, "
-                + "user_id, category_id, working_hours, min_age, max_age, "
-                + "benefits, other_requirements, experience_level, degree_requirement, gender_requirement, status) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        int newJobId = -1;
-
-        try {
-            ps = connection.prepareStatement(sqlJob, Statement.RETURN_GENERATED_KEYS); // tra ve id vua sinh ra
+        try (PreparedStatement ps = connection.prepareStatement(sqlJob, Statement.RETURN_GENERATED_KEYS)) { // tra ve id vua tao
 
             ps.setString(1, job.getTitle());
             ps.setString(2, job.getDescription());
-            ps.setString(3, job.getSalary());
+            ps.setInt(3, job.getSalary());
             ps.setString(4, job.getLocation());
-            ps.setDate(5, job.getEndDate());
-            ps.setObject(6, job.getUserId());
-            ps.setInt(7, job.getCategoryId());
-            ps.setString(8, job.getWorkingHours());
-
-            // age allow null
+            ps.setDate(5, new Date(job.getEndDate().getTime()));
+            ps.setBoolean(6, job.isStatus());
+            ps.setObject(7, job.getUserId());
+            ps.setObject(8, job.getCompanyId());
+            ps.setObject(9, job.getCategoryId());
+            ps.setString(10, job.getWorkingHours());
             if (job.getMinAge() != null) {
-                ps.setInt(9, job.getMinAge());
+                ps.setInt(11, job.getMinAge());
             } else {
-                ps.setNull(9, Types.INTEGER);
+                ps.setNull(11, Types.INTEGER);
             }
             if (job.getMaxAge() != null) {
-                ps.setInt(10, job.getMaxAge());
+                ps.setInt(12, job.getMaxAge());
             } else {
-                ps.setNull(10, Types.INTEGER);
+                ps.setNull(12, Types.INTEGER);
             }
-
-            ps.setString(11, job.getBenefits());
-            ps.setString(12, job.getOtherRequirements());
             ps.setString(13, job.getExperienceLevel());
             ps.setString(14, job.getDegreeRequirement());
             ps.setString(15, job.getGenderRequirement());
-            ps.setString(16, "open");
+            ps.setString(16, job.getBenefits());
+            ps.setString(17, job.getOtherRequirements());
+            ps.setTimestamp(18, new Timestamp(System.currentTimeMillis()));
 
             int rowsAffected = ps.executeUpdate();
+
             if (rowsAffected == 0) {
-                throw new SQLException("Create job fail!!");
+                throw new SQLException("Post Job fail. Please try again!!");
             }
 
-            // getID new create
-            rs = ps.getGeneratedKeys();
-            if (rs.next()) {
-                newJobId = rs.getInt(1);
-            } else {
-                throw new SQLException("Failed to get generated job ID.");
+            // Lấy ID tự động tạo (int)
+            try (ResultSet rs = ps.getGeneratedKeys()) {
+                while (rs.next()) {
+                    newJobId = (UUID) rs.getObject(1);
+                }
             }
 
             return newJobId;
-
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (ps != null) {
-                ps.close();
-            }
         }
     }
 
-    private void insertJobSkills(int newJobId, List<Integer> skillIds) throws SQLException {
-        String sqlSkill = "INSERT INTO job_skills (job_id, skill_id) VALUES (?, ?)";
+    private void insertJobSkills(UUID newJobId, List<UUID> skillIds) throws SQLException {
+        String sqlSkill = "INSERT INTO JobSkills (JobId, SkillId) VALUES (?, ?)";
 
-        PreparedStatement ps = null;
+        try (PreparedStatement ps = connection.prepareStatement(sqlSkill)) {
 
-        try {
-            ps = connection.prepareStatement(sqlSkill);
-
-            for (int skillId : skillIds) {
-                ps.setInt(1, newJobId);
-                ps.setInt(2, skillId);
+            for (UUID skillId : skillIds) {
+                ps.setObject(1, newJobId);
+                ps.setObject(2, skillId);
                 ps.addBatch();
             }
             ps.executeBatch();
-
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
         }
     }
 
-    // post job
-    public boolean postJob(Job job, List<Integer> skillIds) throws SQLException {
+    public boolean postJob(Job job, List<UUID> skillIds) throws SQLException {
         boolean success = false;
 
+        boolean originalAutoCommit = connection.getAutoCommit();
+
         try {
+            connection.setAutoCommit(false);
 
-            // off auto commit
-            this.connection.setAutoCommit(false);
+            UUID newJobId = insertJob(job);
 
-            // insert job
-            int newJobId = insertJob(job);
-
-            // insert skill with job new insert
-            if (skillIds != null) {
+            if (skillIds != null && !skillIds.isEmpty()) {
                 insertJobSkills(newJobId, skillIds);
             }
 
@@ -205,6 +103,7 @@ public class JobDAO extends DBContext {
         } catch (SQLException e) {
             if (connection != null) {
                 try {
+                    System.err.print("Transaction is being rolled back due to: " + e.getMessage());
                     connection.rollback();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
@@ -216,8 +115,7 @@ public class JobDAO extends DBContext {
         } finally {
             if (connection != null) {
                 try {
-                    connection.setAutoCommit(true);
-                    connection.close();
+                    connection.setAutoCommit(originalAutoCommit);
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -226,7 +124,7 @@ public class JobDAO extends DBContext {
         return success;
     }
 
-    public boolean deleteJob(int jobId) throws SQLException {
+    public boolean deleteJob(UUID jobId) throws SQLException {
         PreparedStatement ps = null;
         boolean success = false;
 
@@ -237,9 +135,9 @@ public class JobDAO extends DBContext {
             deleteJobSkill(jobId);
 
             // delete job
-            String sql = "DELETE FROM jobs WHERE id = ?";
+            String sql = "DELETE FROM Jobs WHERE Id = ?";
             ps = connection.prepareStatement(sql);
-            ps.setInt(1, jobId);
+            ps.setObject(1, jobId);
             int rowsAffected = ps.executeUpdate();
 
             // Commit Transaction
@@ -278,117 +176,50 @@ public class JobDAO extends DBContext {
     }
 
     // deleteJob skill
-    private void deleteJobSkill(int id) throws SQLException {
-        PreparedStatement ps = null;
+    private void deleteJobSkill(UUID id) throws SQLException {
 
-        try {
-            String sql = "DELETE FROM job_skills WHERE job_id = ?";
+        String sql = "DELETE FROM JobSkills WHERE JobId = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps = connection.prepareStatement(sql);
-            ps.setInt(1, id);
+            ps.setObject(1, id);
             ps.execute();
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
+
         }
-    }
-
-    public List<Job> getAllJob() throws SQLException {
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        List<Job> jobs = new ArrayList<>();
-
-        try {
-            String sql = "SELECT * FROM jobs ORDER BY created_at DESC";
-            stm = connection.prepareStatement(sql);
-            rs = stm.executeQuery();
-
-            while (rs.next()) {
-                Job job = new Job();
-
-                job.setId(rs.getInt("id"));
-                job.setTitle(rs.getString("title"));
-                job.setCategoryId(rs.getInt("category_id"));
-                job.setSalary(rs.getString("salary"));
-                job.setLocation(rs.getString("location"));
-                job.setEndDate(rs.getDate("endDate"));
-                job.setWorkingHours(rs.getString("working_hours"));
-                job.setMinAge((Integer) rs.getObject("min_age"));
-                job.setMaxAge((Integer) rs.getObject("max_age"));
-                job.setExperienceLevel(rs.getString("experience_level"));
-                job.setDegreeRequirement(rs.getString("degree_requirement"));
-                job.setGenderRequirement(rs.getString("gender_requirement"));
-                job.setDescription(rs.getString("description"));
-                job.setBenefits(rs.getString("benefits"));
-                job.setOtherRequirements(rs.getString("other_requirements"));
-                job.setCreatedAt(rs.getTimestamp("created_at"));
-                job.setUserId(rs.getObject("user_id", UUID.class));
-                job.setStatus(rs.getString("status"));
-                jobs.add(job);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return jobs;
     }
 
     private void updateJobRecord(Job job) throws SQLException {
-        String sql = "UPDATE jobs SET "
-                + "title = ?, description = ?, salary = ?, location = ?, endDate = ?, "
-                + "category_id = ?, working_hours = ?, min_age = ?, max_age = ?, "
-                + "benefits = ?, other_requirements = ?, experience_level = ?, "
-                + "degree_requirement = ?, gender_requirement = ?, status = ? "
-                + "WHERE id = ?";
+        String sql = "UPDATE Jobs SET "
+                + "Title = ?, Description = ?, Salary = ?, Location = ?, EndDate = ?, "
+                + "CategoryId = ?, Working_Hours = ?, Min_Age = ?, Max_Age = ?, "
+                + "Benefits = ?, Other_Requirements = ?, Experience_Level = ?, "
+                + "Degree_Requirement = ?, Gender_Requirement = ?, Status = ? "
+                + "WHERE Id = ?";
 
-        PreparedStatement ps = null;
-
-        try {
-            ps = connection.prepareStatement(sql);
-
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, job.getTitle());
-            ps.setString(2, job.getDescription());
-            ps.setString(3, job.getSalary());
-            ps.setString(4, job.getLocation());
-            ps.setDate(5, job.getEndDate());
-            ps.setInt(6, job.getCategoryId());
-            ps.setString(7, job.getWorkingHours());
-
+            ps.setInt(2, job.getSalary());
+            ps.setString(3, job.getLocation());
+            ps.setDate(4, new Date(job.getEndDate().getTime()));
+            ps.setObject(5, job.getCategoryId());
+            ps.setString(6, job.getWorkingHours());
             if (job.getMinAge() != null) {
-                ps.setInt(8, job.getMinAge());
+                ps.setInt(7, job.getMinAge());
+            } else {
+                ps.setNull(7, Types.INTEGER);
+            }
+            if (job.getMaxAge() != null) {
+                ps.setInt(8, job.getMaxAge());
             } else {
                 ps.setNull(8, Types.INTEGER);
             }
-            if (job.getMaxAge() != null) {
-                ps.setInt(9, job.getMaxAge());
-            } else {
-                ps.setNull(9, Types.INTEGER);
-            }
 
-            ps.setString(10, job.getBenefits());
-            ps.setString(11, job.getOtherRequirements());
-            ps.setString(12, job.getExperienceLevel());
-            ps.setString(13, job.getDegreeRequirement());
-            ps.setString(14, job.getGenderRequirement());
-            ps.setString(15, job.getStatus());
-            ps.setInt(16, job.getId());
+            ps.setString(9, job.getBenefits());
+            ps.setString(10, job.getOtherRequirements());
+            ps.setString(11, job.getExperienceLevel());
+            ps.setString(12, job.getDegreeRequirement());
+            ps.setString(13, job.getGenderRequirement());
+            ps.setBoolean(14, job.isStatus());
+            ps.setObject(15, job.getId());
 
             int rowsAffected = ps.executeUpdate();
 
@@ -396,14 +227,10 @@ public class JobDAO extends DBContext {
                 throw new SQLException("Update failed. No job found with id: " + job.getId());
             }
 
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
         }
     }
 
-    public boolean updateJob(Job job, List<Integer> skillIds) throws SQLException {
+    public boolean updateJob(Job job, List<UUID> skillIds) throws SQLException {
 
         boolean success = false;
 
@@ -444,59 +271,260 @@ public class JobDAO extends DBContext {
         return success;
     }
 
-    public Job getJobById(int jobId) {
-        PreparedStatement stm = null;
-        ResultSet rs = null;
-        Job job = null;
-        try {
-            String sql = "SELECT * FROM jobs WHERE id = ?";
-            stm = connection.prepareStatement(sql);
-            stm.setInt(1, jobId);
-            rs = stm.executeQuery();
+    public List<Job> getNewestJobs(int limit) {
+        List<Job> jobs = new ArrayList<>();
+        String sql = """
+            SELECT TOP (?) 
+                            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+                            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+                            cat.Name AS CategoryName,
+                            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+                        FROM Jobs j
+                        LEFT JOIN Companies c ON j.CompanyId = c.Id
+                        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+                        WHERE j.Status = 'True'
+                        ORDER BY j.EndDate DESC
+        """;
 
-            if (rs.next()) {
-                job = new Job();
-
-                // Lấy tất cả các trường
-                job.setId(rs.getInt("id"));
-                job.setTitle(rs.getString("title"));
-                job.setCategoryId(rs.getInt("category_id"));
-                job.setSalary(rs.getString("salary"));
-                job.setLocation(rs.getString("location"));
-                job.setEndDate(rs.getDate("endDate"));
-                job.setWorkingHours(rs.getString("working_hours"));
-                job.setMinAge((Integer) rs.getObject("min_age"));
-                job.setMaxAge((Integer) rs.getObject("max_age"));
-                job.setExperienceLevel(rs.getString("experience_level"));
-                job.setDegreeRequirement(rs.getString("degree_requirement"));
-                job.setGenderRequirement(rs.getString("gender_requirement"));
-                job.setDescription(rs.getString("description"));
-                job.setBenefits(rs.getString("benefits"));
-                job.setOtherRequirements(rs.getString("other_requirements"));
-                job.setCreatedAt(rs.getTimestamp("created_at"));
-                job.setUserId(rs.getObject("user_id", UUID.class));
-                job.setStatus(rs.getString("status"));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            // Đóng tất cả
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (stm != null) {
-                    stm.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL!");
+            return jobs;
         }
-        return job;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, limit);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+
+                    // Load skills cho job này
+                    job.setSkills(getJobSkills(job.getId()));
+
+                    jobs.add(job);
+                }
+            }
+
+            System.out.println("Loaded " + jobs.size() + " newest jobs");
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getNewestJobs: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return jobs;
     }
 
+    public List<Job> getAllJobs(int page, int pageSize) {
+        List<Job> jobs = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
+
+        String sql = """
+        SELECT 
+            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+            cat.Name AS CategoryName,
+            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+        FROM Jobs j
+        LEFT JOIN Companies c ON j.CompanyId = c.Id
+        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+        WHERE j.Status = 1
+        ORDER BY j.EndDate DESC
+        OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+    """;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, pageSize);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    jobs.add(job);
+                }
+            }
+
+            System.out.println("getAllJobs: Loaded " + jobs.size() + " jobs (page " + page + ")");
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getAllJobs: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return jobs;
+    }
+
+    public Job getJobById(UUID jobId) {
+        String sql = """
+            SELECT 
+                j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                j.EndDate, j.Status, j.CompanyId, j.CategoryId, j.UserId,
+                c.Name AS CompanyName, c.Logo AS CompanyLogo,
+                cat.Name AS CategoryName,
+                DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+            FROM Jobs j
+            LEFT JOIN Companies c ON j.CompanyId = c.Id
+            LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+            WHERE j.Id = ?
+        """;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, jobId.toString());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    return job;
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getJobById: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Job> getJobsByCategory(UUID categoryId) {
+        List<Job> jobs = new ArrayList<>();
+        String sql = """
+            SELECT 
+                j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+                c.Name AS CompanyName, c.Logo AS CompanyLogo,
+                cat.Name AS CategoryName,
+                DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+            FROM Jobs j
+            LEFT JOIN Companies c ON j.CompanyId = c.Id
+            LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+            WHERE j.CategoryId = ? AND j.Status = 'Active'
+            ORDER BY j.EndDate DESC
+        """;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, categoryId.toString());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    jobs.add(job);
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getJobsByCategory: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return jobs;
+    }
+
+    private List<String> getJobSkills(UUID jobId) {
+        List<String> skills = new ArrayList<>();
+        String sql = """
+            SELECT s.Name
+            FROM JobSkills js
+            INNER JOIN Skills s ON js.SkillId = s.Id
+            WHERE js.JobId = ?
+        """;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, jobId.toString());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    skills.add(rs.getString("Name"));
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getJobSkills: " + ex.getMessage());
+        }
+
+        return skills;
+    }
+
+    public int getTotalJobs() {
+        String sql = "SELECT COUNT(*) FROM Jobs WHERE Status = 'True'";
+
+        try (PreparedStatement stm = connection.prepareStatement(sql); ResultSet rs = stm.executeQuery()) {
+
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getTotalJobs: " + ex.getMessage());
+        }
+
+        return 0;
+    }
+
+    public List<Job> searchJobs(String keyword) {
+        List<Job> jobs = new ArrayList<>();
+        String sql = """
+             SELECT 
+                            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+                            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+                            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+                            cat.Name AS CategoryName,
+                            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+                        FROM Jobs j
+                        LEFT JOIN Companies c ON j.CompanyId = c.Id
+                        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+                        WHERE j.Status = 'True' 
+                            AND (j.Title LIKE ? OR j.Description LIKE ? OR c.Name LIKE ?)
+                        ORDER BY j.EndDate DESC
+        """;
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            String searchPattern = "%" + keyword + "%";
+            stm.setString(1, searchPattern);
+            stm.setString(2, searchPattern);
+            stm.setString(3, searchPattern);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    jobs.add(job);
+                }
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in searchJobs: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        return jobs;
+    }
+
+    private Job extractJobFromResultSet(ResultSet rs) throws SQLException {
+        Job job = new Job();
+        job.setId(UUID.fromString(rs.getString("Id")));
+        job.setTitle(rs.getString("Title"));
+        job.setDescription(rs.getString("Description"));
+        job.setSalary(rs.getInt("Salary"));
+        job.setLocation(rs.getString("Location"));
+        job.setEndDate(rs.getDate("EndDate"));
+        job.setStatus(rs.getBoolean("Status"));
+        job.setCompanyId(rs.getString("CompanyId") != null
+                ? UUID.fromString(rs.getString("CompanyId")) : null);
+        job.setCategoryId(rs.getString("CategoryId") != null
+                ? UUID.fromString(rs.getString("CategoryId")) : null);
+
+        // Thông tin bổ sung
+        job.setCompanyName(rs.getString("CompanyName"));
+        job.setCompanyLogo(rs.getString("CompanyLogo"));
+        job.setCategoryName(rs.getString("CategoryName"));
+        job.setDaysAgo(rs.getInt("DaysAgo"));
+
+        return job;
+    }
 }

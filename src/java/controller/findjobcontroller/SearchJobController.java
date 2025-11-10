@@ -2,26 +2,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers;
+package controller.findjobcontroller;
 
 import dal.JobDAO;
-import jakarta.servlet.RequestDispatcher;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
-import model.Category;
 import model.Job;
-import model.Skill;
 
 /**
  *
- * @author ngtha
+ * @author FPT
  */
-public class UpdateJobController extends HttpServlet {
+public class SearchJobController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +38,10 @@ public class UpdateJobController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateJobController</title>");
+            out.println("<title>Servlet SearchJobController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateJobController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchJobController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,21 +59,28 @@ public class UpdateJobController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        //processRequest(request, response);
+        JobDAO dao = new JobDAO();
+        String keyword = request.getParameter("keyword");
 
-        String idStr = request.getParameter("id");
-        Job job = null;
-        if (idStr != null && !idStr.isEmpty()) {
-
-            int id = Integer.parseInt(idStr);
-            JobDAO dao = new JobDAO();
-            job = dao.getJobById(id);
+        List<Job> jobs = new ArrayList<>();
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            jobs = dao.searchJobs(keyword.trim());
+        } else {
+            jobs = dao.getAllJobs(1, 50);
         }
 
-        loadFormLists(request);
+        if (jobs == null) {
+            jobs = new ArrayList<>();
+        }
 
-        request.setAttribute("job", job);
-        request.getRequestDispatcher("views/pages/job/update.jsp").forward(request, response);
+        System.out.println("Final jobs size: " + jobs.size());
+
+        request.setAttribute("jobs", jobs);
+        request.setAttribute("keyword", keyword);
+        request.setAttribute("totalJobs", jobs.size());
+
+        request.getRequestDispatcher("/views/pages/job/index.jsp").forward(request, response);
     }
 
     /**
@@ -89,22 +94,18 @@ public class UpdateJobController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-//        processRequest(request, response);
+        //processRequest(request, response);
+        doGet(request, response);
     }
 
-    private void loadFormLists(HttpServletRequest request) {
-        try {
-            JobDAO categoryDAO = new JobDAO();
-            List<Category> categoryList = categoryDAO.getAllCategories();
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
 
-            JobDAO skillDAO = new JobDAO();
-            List<Skill> skillList = skillDAO.getAllSkills();
-
-            request.setAttribute("categoryList", categoryList);
-            request.setAttribute("skillList", skillList);
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("error", "Unable to update job at this time.");
-        }
-    }
 }

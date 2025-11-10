@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controllers;
+package controller.managejob;
 
 import dal.JobDAO;
 import java.io.IOException;
@@ -29,10 +29,7 @@ public class ListJobController extends HttpServlet {
             throws ServletException, IOException {
 
         try {
-            JobDAO jobDAO = new JobDAO();
-            List<Job> jobList = jobDAO.getAllJob();
-
-            request.setAttribute("jobList", jobList);
+            loadJobLists(request);
             request.getRequestDispatcher("views/pages/job/manage.jsp").forward(request, response);
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,6 +42,39 @@ public class ListJobController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    }
+
+    private void loadJobLists(HttpServletRequest request) throws ServletException, IOException {
+
+        int page = 1;
+        final int PAGE_SIZE = 10;
+        try {
+            String pageStr = request.getParameter("page");
+            if (pageStr != null && !pageStr.trim().isEmpty()) {
+                page = Integer.parseInt(pageStr);
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("Invalid page number format: " + e.getMessage());
+            page = 1;
+        }
+
+        if (page < 1) {
+            page = 1;
+        }
+
+        try {
+            JobDAO jobDAO = new JobDAO();
+
+            List<Job> jobList = jobDAO.getAllJobs(page, PAGE_SIZE);
+
+            request.setAttribute("jobList", jobList);
+            request.setAttribute("currentPage", page);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            throw new ServletException("Lỗi tải danh sách công việc khi phân trang.", e);
+        }
     }
 
 }

@@ -1,29 +1,27 @@
 package model;
 
-import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Category {
 
-    private int id;
+    private UUID id;
     private String name;
-    private Timestamp createdAt;
+    private int jobCount;
 
-    // Constructors
     public Category() {
     }
 
-    public Category(int id, String name, Timestamp createdAt) {
+    public Category(UUID id, String name, int jobCount) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
+        this.jobCount = jobCount;
     }
 
-    // Getters and Setters
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -35,11 +33,12 @@ public class Category {
         this.name = name;
     }
 
-    public Timestamp getCreatedAt() {
-        return createdAt;
+    public int getJobCount() {
+        return jobCount;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
+    public void setJobCount(int jobCount) {
+        this.jobCount = jobCount;
+
     }
 }
