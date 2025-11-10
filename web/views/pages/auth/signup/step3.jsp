@@ -5,14 +5,14 @@
                 <img src="https://iconape.com/wp-content/files/ww/350307/png/350307.png"  class='w-56'/>
             </a>
 
-            <jsp:include page="/views/layouts/heading.jsp">
+            <jsp:include page="/views/components/heading.jsp">
                 <jsp:param name="title" value="How much is the mininum salary You want?"/>
                 <jsp:param name="sub" value="We use this to match your nearby offers that approximately pay this amount or more"/>
             </jsp:include>
         </div>
 
         <div class="mt-8">
-            <form action="/EmployeeManagement/signup" method="POST">
+            <form action="signup" method="POST">
                 <input type="hidden" name="currentStep" value="3">
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Minimum Salary Amount
@@ -31,7 +31,7 @@
                 <fieldset class="fieldset">
                     <legend class="fieldset-legend">Payment Period
                     </legend>
-                    <input type="text" class="input w-full" placeholder="Enter Payment Period" />
+                    <input type="text" name="payment" class="input w-full" placeholder="Enter Payment Period" />
 
                 </fieldset>
 

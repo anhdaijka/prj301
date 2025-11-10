@@ -69,16 +69,16 @@
                     </div>
 
                     <div class="mt-8">
-                        <form action="/EmployeeManagement/login" method="post">
+                        <form action="login" method="POST">
                             <fieldset class="fieldset">
                                 <legend class="fieldset-legend">Email address *
                                 </legend>
-                                <input type="email" class="input w-full" placeholder="Your email here" name="username"/>
+                                <input type="email" class="input w-full" placeholder="Your email here" name="email" value="<c:out value="${requestScope.email}"/>"/>
                             </fieldset>
 
                             <fieldset class="fieldset">
                                 <legend class="fieldset-legend">Password *</legend>
-                                <input type="password" class="input w-full" placeholder="Type your password" name="password"/>
+                                <input type="password" class="input w-full" placeholder="Type your password" name="password" value="<c:out value="${requestScope.password}"/>"/>
                                 <a href="#" class="label text-sm text-error focus:text-warning hover:text-warning hover:underline">Forgot password?</a>
                             </fieldset>
 
@@ -88,7 +88,7 @@
 
                         </form>
 
-                        <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet? <a href="/EmployeeManagement/signup" class="text-secondary focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
+                        <p class="mt-6 text-sm text-center text-gray-400">Don&#x27;t have an account yet? <a href="signup" class="text-secondary focus:outline-none focus:underline hover:underline">Sign up</a>.</p>
                     </div>
                 </div>
             </div>

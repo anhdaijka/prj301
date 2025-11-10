@@ -35,15 +35,15 @@
 
             <p class="flex w-full items-center justify-between text-gray-400 text-xs mt-4">
                 <span>
-                    50 Jobs
+                    ${param.jobCount} Jobs
                 </span>
 
                 <span>
-                    103.8k Reviews
+                    ${param.reviewCount}k Reviews
                 </span>
 
                 <span>
-                    88.1k Salaries
+                    ${param.avgSalary}k Salaries
                 </span>
 
             </p>
