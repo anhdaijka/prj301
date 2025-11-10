@@ -34,7 +34,7 @@
     </servlet>
     <servlet>
         <servlet-name>PostJobController</servlet-name>
-        <servlet-class>controller.PostJobController</servlet-class>
+        <servlet-class>controllers.PostJobController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>SignUpController</servlet-name>
