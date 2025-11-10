@@ -54,20 +54,9 @@
 
             </div>
             <!--Default-->
-            <div class="flex-1 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
-                <c:forEach var="i" begin="1" end="6">
-                    <jsp:include page="/views/components/jobCard.jsp">
-                        <jsp:param name="link" value="#"/>
-                        <jsp:param name="src" value="https://gigamall.com.vn/data/2019/09/20/11491513_LOGO-McDonald_s.jpg"/>
-                        <jsp:param name="company" value="Mcdonald's"/>
-                        <jsp:param name="title" value="Web Developer"/>
-                        <jsp:param name="skills" value="${pageScope.items}"/>
-                        <jsp:param name="location" value="Hanoi"/>
-                        <jsp:param name="salary" value="700"/>
-                        <jsp:param name="className" value="w-md" />
-                    </jsp:include>
-                </c:forEach>
-            </div>
+
+            Found Job here
+
         </div>
     </section>
 

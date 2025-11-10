@@ -1,3 +1,4 @@
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <%-- 
@@ -59,7 +60,7 @@
 
                     <fieldset class="fieldset flex-1 w-full">
                         <legend class="fieldset-legend">Minium Salaries</legend>
-                        <input type="number" class="input w-full validator" min="100" placeholder="Ex: $1000 - $1500" name="salary"/>
+                        <input type="text" class="input w-full validator" min="100" placeholder="Ex: $1000 - $1500" name="salary"/>
                     </fieldset>
 
 
@@ -175,8 +176,6 @@
                             <input type="checkbox" name="skillIds" value="${s.id}"> ${s.name}
                         </label>
                     </c:forEach>
-                    <label><input type="checkbox" name="skillIds" id="otherCheckbox" value="other">Other</label>
-                    <input class="input w-full" type="text" id="otherInput" name="" placeholder="Enter other skill" style="display: none">
                 </fieldset>
 
                 <fieldset class="fieldset w-full">
@@ -188,19 +187,6 @@
         </section>
     </body>
 
-    <script>
-        const otherCheckbox = document.getElementById('otherCheckbox');
-        const otherInput = document.getElementById('otherInput');
-
-        otherCheckbox.addEventListener('change', () => {
-            if (otherCheckbox.checked) {
-                otherInput.style.display = 'block';
-            } else {
-                otherInput.style.display = 'none';
-                otherInput.value = '';
-            }
-        });
-    </script>
 
     <jsp:include page="../../components/footer.jsp"/>
 

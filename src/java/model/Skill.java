@@ -1,29 +1,26 @@
 package model;
 
-import java.sql.Timestamp;
+import java.util.UUID;
 
 public class Skill {
 
-    private int id;
+    private UUID id;
     private String name;
-    private Timestamp createdAt;
 
     // Constructors
     public Skill() {
     }
 
-    public Skill(int id, String name, Timestamp createdAt) {
+    public Skill(UUID id, String name) {
         this.id = id;
         this.name = name;
-        this.createdAt = createdAt;
     }
 
-    // Getters and Setters
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -33,13 +30,5 @@ public class Skill {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Timestamp getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 }
