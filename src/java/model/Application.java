@@ -6,10 +6,6 @@ package model;
 
 import java.util.Date;
 
-/**
- *
- * @author FPT
- */
 public class Application {
 
     private String id;
@@ -20,6 +16,12 @@ public class Application {
     private String cvSnapshot;
     private Date appliedAt;
 
+    private String jobTitle;
+    private String companyName;
+    private String companyLogo;
+    private String jobLocation;
+    private String jobSkills;
+    
     public Application() {
     }
 
@@ -33,7 +35,6 @@ public class Application {
         this.appliedAt = appliedAt;
     }
 
-    // Getters and Setters
     public String getId() {
         return id;
     }
@@ -89,4 +90,46 @@ public class Application {
     public void setAppliedAt(Date appliedAt) {
         this.appliedAt = appliedAt;
     }
+
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    public String getCompanyLogo() {
+        return companyLogo;
+    }
+
+    public void setCompanyLogo(String companyLogo) {
+        this.companyLogo = companyLogo;
+    }
+
+    public String getJobLocation() {
+        return jobLocation;
+    }
+
+    public void setJobLocation(String jobLocation) {
+        this.jobLocation = jobLocation;
+    }
+
+    public String getJobSkills() {
+        return jobSkills;
+    }
+
+    public void setJobSkills(String jobSkills) {
+        this.jobSkills = jobSkills;
+    }
+    
+    
 }
