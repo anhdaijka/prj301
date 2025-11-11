@@ -13,7 +13,24 @@ import java.util.UUID;
 import model.Company;
 
 public class CompanyDAO extends DBContext {
-    
+
+    public UUID getCompanyIdByUserId(UUID userId) {
+        String sql = "SELECT Id FROM Companies WHERE UserId = ?";
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, userId.toString());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                if (rs.next()) {
+                    UUID companyId = UUID.fromString(rs.getString("Id"));
+                    return companyId;
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Company> getTopCompanies(int limit) {
         List<Company> companies = new ArrayList<>();
         String sql = """
@@ -27,41 +44,41 @@ public class CompanyDAO extends DBContext {
                         HAVING COUNT(j.Id) > 0
                         ORDER BY JobCount DESC, c.Name
         """;
-        
+
         if (connection == null) {
             System.err.println("ERROR: Database connection is NULL!");
             return companies;
         }
-        
+
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, limit);
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Company company = extractCompanyFromResultSet(rs);
-                    
+
                     // Load skills cho company này
                     company.setSkills(getCompanySkills(company.getId()));
-                    
+
                     // Set rating giả (có thể lấy từ bảng Reviews nếu có)
                     company.setRating(4.0 + Math.random()); // Random 4.0-5.0
-                    
+
                     companies.add(company);
                 }
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("SQL Error in getTopCompanies: " + ex.getMessage());
             ex.printStackTrace();
         }
-        
+
         return companies;
     }
-    
+
     public List<Company> getAllCompanies(int page, int pageSize) {
         List<Company> companies = new ArrayList<>();
         int offset = (page - 1) * pageSize;
-        
+
         String sql = """
             SELECT 
                 c.Id, c.Name, c.Description, c.Location, c.Website, c.ImageUrl,
@@ -73,11 +90,11 @@ public class CompanyDAO extends DBContext {
             ORDER BY c.Name
             OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
         """;
-        
+
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, offset);
             stm.setInt(2, pageSize);
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     Company company = extractCompanyFromResultSet(rs);
@@ -86,15 +103,15 @@ public class CompanyDAO extends DBContext {
                     companies.add(company);
                 }
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("SQL Error in getAllCompanies: " + ex.getMessage());
             ex.printStackTrace();
         }
-        
+
         return companies;
     }
-    
+
     public Company getCompanyById(UUID companyId) {
         String sql = """
             SELECT 
@@ -106,10 +123,10 @@ public class CompanyDAO extends DBContext {
             WHERE c.Id = ?
             GROUP BY c.Id, c.Name, c.Description, c.Location, c.Website, c.Logo
         """;
-        
+
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, companyId.toString());
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 if (rs.next()) {
                     Company company = extractCompanyFromResultSet(rs);
@@ -118,15 +135,15 @@ public class CompanyDAO extends DBContext {
                     return company;
                 }
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("SQL Error in getCompanyById: " + ex.getMessage());
             ex.printStackTrace();
         }
-        
+
         return null;
     }
-    
+
     private List<String> getCompanySkills(UUID companyId) {
         List<String> skills = new ArrayList<>();
         String sql = """
@@ -138,40 +155,39 @@ public class CompanyDAO extends DBContext {
             GROUP BY s.Name
             ORDER BY SkillCount DESC
         """;
-        
+
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, companyId.toString());
-            
+
             try (ResultSet rs = stm.executeQuery()) {
                 while (rs.next()) {
                     skills.add(rs.getString("Name"));
                 }
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("SQL Error in getCompanySkills: " + ex.getMessage());
         }
-        
+
         return skills;
     }
-    
+
     public int getTotalCompanies() {
         String sql = "SELECT COUNT(*) FROM Companies";
-        
-        try (PreparedStatement stm = connection.prepareStatement(sql);
-             ResultSet rs = stm.executeQuery()) {
-            
+
+        try (PreparedStatement stm = connection.prepareStatement(sql); ResultSet rs = stm.executeQuery()) {
+
             if (rs.next()) {
                 return rs.getInt(1);
             }
-            
+
         } catch (SQLException ex) {
             System.err.println("SQL Error in getTotalCompanies: " + ex.getMessage());
         }
-        
+
         return 0;
     }
-    
+
     private Company extractCompanyFromResultSet(ResultSet rs) throws SQLException {
         Company company = new Company();
         company.setId(UUID.fromString(rs.getString("Id")));
@@ -181,14 +197,14 @@ public class CompanyDAO extends DBContext {
         company.setWebsite(rs.getString("Website"));
         company.setLogo(rs.getString("ImageUrl"));
         company.setJobCount(rs.getInt("JobCount"));
-        
+
         // AvgSalary có thể null nếu không có jobs
         double avgSalary = rs.getDouble("AvgSalary");
         company.setAvgSalary(rs.wasNull() ? 0 : avgSalary);
-        
+
         // Set review count giả (có thể lấy từ DB nếu có bảng Reviews)
-        company.setReviewCount((int)(Math.random() * 100 + 50)); // 50-150
-        
+        company.setReviewCount((int) (Math.random() * 100 + 50)); // 50-150
+
         return company;
     }
 }

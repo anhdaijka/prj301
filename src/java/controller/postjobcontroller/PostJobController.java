@@ -1,6 +1,7 @@
 package controller.postjobcontroller;
 
 import dal.CategoryDAO;
+import dal.CompanyDAO;
 import dal.JobDAO;
 import dal.SkillDAO;
 import java.io.IOException;
@@ -42,10 +43,12 @@ public class PostJobController extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
-        Company company = (Company) session.getAttribute("company");
+        
+        CompanyDAO comDao = new CompanyDAO();
+        UUID companyId = comDao.getCompanyIdByUserId(user.getId());
 
         try {
-            if (user == null || company == null) {
+            if (user == null) {
                 response.sendRedirect("views/pages/auth/login/index.jsp");
                 return;
             }
@@ -68,7 +71,6 @@ public class PostJobController extends HttpServlet {
 
             UUID categoryId = UUID.fromString(categoryIdStr);
             UUID userId = user.getId();
-            UUID companyId = company.getId();
 
             int salary = Integer.parseInt(salaryStr);
             Date endDate = Date.valueOf(endDateStr);
@@ -99,6 +101,7 @@ public class PostJobController extends HttpServlet {
             job.setOtherRequirements(otherRequirements);
             job.setGenderRequirement(genderRequirement);
             job.setDescription(description);
+            job.setStatus(true);
             job.setUserId(userId);
             job.setCompanyId(companyId);
 
@@ -106,7 +109,7 @@ public class PostJobController extends HttpServlet {
             boolean success = dao.postJob(job, skillIds);
 
             if (success) {
-                response.sendRedirect("views/pages/job/manage.jsp?success=true");
+                response.sendRedirect(request.getContextPath() +"/ListJob");
             } else {
                 throw new Exception("Post Job fail. Please try again!!");
             }
@@ -115,26 +118,27 @@ public class PostJobController extends HttpServlet {
             request.setAttribute("error", "Input invalid");
             e.printStackTrace();
             loadFormLists(request);
-            request.getRequestDispatcher("/views/pages/job/post.jsp").forward(request, response);
+            request.getRequestDispatcher("views/pages/job/post.jsp").forward(request, response);
         } catch (Exception e) {
             request.setAttribute("error", "Unable to post job at this time.");
             e.printStackTrace();
             loadFormLists(request);
-            request.getRequestDispatcher("/views/pages/job/manage.jsp").forward(request, response);
+            response.sendRedirect(request.getContextPath() +"/ListJob");
         }
     }
 
-    private void loadFormLists(HttpServletRequest request) throws ServletException, IOException {
-        SkillDAO sDao = new SkillDAO();
-        CategoryDAO caDao = new CategoryDAO();
+    private void loadFormLists(HttpServletRequest request) throws ServletException {
         try {
-            List<Category> categoryList = caDao.getAllCategoriesWithJobCount();
-            List<Skill> skillList = sDao.getAllSkills();
+            CategoryDAO categoryDAO = new CategoryDAO();
+            SkillDAO skillDAO = new SkillDAO();
+
+            List<Category> categoryList = categoryDAO.getAllCategoriesWithJobCount();
+            List<Skill> skillList = skillDAO.getAllSkills();
 
             request.setAttribute("categoryList", categoryList);
             request.setAttribute("skillList", skillList);
         } catch (Exception e) {
-            throw new ServletException("Unable to post job at this time.", e);
+            throw new ServletException("Lỗi tải danh sách Category/Skill.", e);
         }
     }
 }

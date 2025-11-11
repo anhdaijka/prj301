@@ -20,7 +20,7 @@ public class SkillDAO extends DBContext {
             while (rs.next()) {
                 Skill skill = new Skill();
 
-                skill.setId((UUID) rs.getObject("Id"));
+                skill.setId(UUID.fromString(rs.getString("Id")));
                 skill.setName(rs.getString("Name"));
                 skills.add(skill);
             }
@@ -32,4 +32,30 @@ public class SkillDAO extends DBContext {
         }
         return skills;
     }
+
+    public List<UUID> getSkillIdsByJobId(UUID jobId) {
+        List<UUID> skillIds = new ArrayList<>();
+        String sql = "SELECT SkillId FROM JobSkills WHERE JobId = ?";
+
+        if (connection == null) {
+            return skillIds;
+        }
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setString(1, jobId.toString());
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    UUID skillId = UUID.fromString(rs.getString("SkillId"));
+                    skillIds.add(skillId);
+                }
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+
+        return skillIds;
+    }
+
 }

@@ -37,7 +37,7 @@ public class CategoryDAO extends DBContext {
 
             while (rs.next()) {
                 Category category = new Category();
-                category.setId((UUID) rs.getObject("Id"));
+                category.setId(UUID.fromString(rs.getString("Id")));
                 category.setName(rs.getString("Name"));
                 category.setJobCount(rs.getInt("jobCount"));
                 categoryList.add(category);

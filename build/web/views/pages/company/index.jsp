@@ -101,7 +101,10 @@
                         <a role="tab" class="tab tab-active about">About Company</a>
                         <a role="tab" class="tab people">People</a>
                         <a role="tab" class="tab overview">Overview</a>
-                        <a role="tab" class="tab jobs">Jobs</a>
+                        <a role="tab" 
+                           class="tab jobs"
+                           href="${pageContext.request.contextPath}/ListJob">Jobs</a>
+                                         
                     </div>
 
                     <p class="" id="content"></p>
@@ -129,8 +132,8 @@
                 ];
 
                 let activeTab = document.querySelector("a.tab.tab-active");
-                
-                
+
+
                 //Default content
                 let setContent = () => {
                     activeTab = document.querySelector("a.tab.tab-active");
@@ -141,7 +144,7 @@
                         }
                     })
                 }
-                
+
                 setContent();
 
                 tabs.forEach((tab) => {

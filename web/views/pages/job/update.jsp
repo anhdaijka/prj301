@@ -19,10 +19,9 @@
     <body>
         <section class="max-w-lg md:max-w-3xl mx-auto my-36 grid place-content-center">
 
-            <form action="updateJob" method="post" class="min-w-sm md:min-w-xl flex flex-col items-center justify-center gap-6">
+            <form action="UpdateJob" method="post" class="min-w-sm md:min-w-xl flex flex-col items-center justify-center gap-6">
 
                 <h1 class="text-xl md:text-3xl font-bold">Update Job</h1>
-
                 <c:if test="${not empty error }">
                     <div role="alert" class="alert ${param.alert} alert-error w-full h-12 text-center" id="message">
                         <c:if test="${not empty error}">${error}</c:if>
@@ -30,7 +29,6 @@
                 </c:if>
 
                 <input type="hidden" name="jobId" value="${job.id}" />
-
 
                 <fieldset class="fieldset w-full">
                     <legend class="fieldset-legend">Job title (*)</legend>
@@ -180,7 +178,7 @@
                     <c:forEach var="s" items="${skillList}">
                         <label>
                             <input type="checkbox" name="skillIds" value="${s.id}"
-                                   <c:forEach var="checkedId" items="${checkedSkillIds}">
+                                   <c:forEach var="checkedId" items="${jobSkillIds}">
                                        <c:if test="${s.id == checkedId}">checked</c:if>
                                    </c:forEach>
                                    > ${s.name}

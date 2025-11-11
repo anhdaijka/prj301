@@ -104,10 +104,10 @@
                                 </td>
                                 
                                 <td>
-                                    <c:if test="${job.status == 'open'}">
+                                    <c:if test="${job.status == true}">
                                         <span class="status-open">Open</span>
                                     </c:if>
-                                    <c:if test="${job.status == 'closed'}">
+                                    <c:if test="${job.status == false}">
                                         <span class="status-closed">Closed</span>
                                     </c:if>
                                 </td>

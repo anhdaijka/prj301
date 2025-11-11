@@ -125,32 +125,34 @@ public class JobDAO extends DBContext {
     }
 
     public boolean deleteJob(UUID jobId) throws SQLException {
-        PreparedStatement ps = null;
         boolean success = false;
 
+        if (connection == null) {
+            throw new SQLException("Connection is null!");
+        }
+
         try {
-            this.connection.setAutoCommit(false);
+            connection.setAutoCommit(false);
 
-            // delete job skill
+            // 1. Xóa các bảng phụ trước
             deleteJobSkill(jobId);
+            deleteJobApplications(jobId);
 
-            // delete job
+            // 2. Xóa bảng chính Jobs
+            int rowsAffected = 0;
             String sql = "DELETE FROM Jobs WHERE Id = ?";
-            ps = connection.prepareStatement(sql);
-            ps.setObject(1, jobId);
-            int rowsAffected = ps.executeUpdate();
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setString(1, jobId.toString());
+                rowsAffected = ps.executeUpdate();
+            }
 
-            // Commit Transaction
-            this.connection.commit();
-
-            // Nếu rowsAffected > 0, nghĩa là đã xóa job thành công
+            connection.commit();
             success = (rowsAffected > 0);
 
         } catch (SQLException e) {
-            // Nếu có lỗi, rollback lại tất cả thay đổi
-            if (this.connection != null) {
+            if (connection != null) {
                 try {
-                    this.connection.rollback();
+                    connection.rollback();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
                 }
@@ -159,16 +161,12 @@ public class JobDAO extends DBContext {
             throw e;
 
         } finally {
-            try {
-                if (ps != null) {
-                    ps.close();
-                }
-                if (connection != null) {
+            if (connection != null) {
+                try {
                     connection.setAutoCommit(true);
-                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
 
@@ -181,9 +179,17 @@ public class JobDAO extends DBContext {
         String sql = "DELETE FROM JobSkills WHERE JobId = ?";
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setObject(1, id);
+            ps.setString(1, id.toString());
             ps.execute();
 
+        }
+    }
+
+    private void deleteJobApplications(UUID jobId) throws SQLException {
+        String sql = "DELETE FROM Applications WHERE JobId = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, jobId.toString());
+            ps.execute();
         }
     }
 
@@ -262,7 +268,6 @@ public class JobDAO extends DBContext {
             if (connection != null) {
                 try {
                     this.connection.setAutoCommit(true);
-                    this.connection.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -283,7 +288,7 @@ public class JobDAO extends DBContext {
                         FROM Jobs j
                         LEFT JOIN Companies c ON j.CompanyId = c.Id
                         LEFT JOIN Categories cat ON j.CategoryId = cat.Id
-                        WHERE j.Status = 'True'
+                        WHERE j.Status = 1
                         ORDER BY j.EndDate DESC
         """;
 
@@ -316,6 +321,53 @@ public class JobDAO extends DBContext {
         return jobs;
     }
 
+    public List<Job> getJobsByCompany(UUID companyId, int page, int pageSize) {
+        List<Job> jobs = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
+
+        String sql = """
+        SELECT 
+            j.Id, j.Title, j.Description, j.Salary, j.Location, 
+            j.EndDate, j.Status, j.CompanyId, j.CategoryId,
+            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+            cat.Name AS CategoryName,
+            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
+        FROM Jobs j
+        LEFT JOIN Companies c ON j.CompanyId = c.Id
+        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+        WHERE j.Status = 'True' AND j.CompanyId = ? 
+        ORDER BY j.EndDate DESC
+        OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+    """;
+
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL in getJobsByCompany!");
+            return jobs;
+        }
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+
+            stm.setString(1, companyId.toString());
+            stm.setInt(2, offset);
+            stm.setInt(3, pageSize);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    jobs.add(job);
+                }
+            }
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getJobsByCompany: " + ex.getMessage());
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            System.err.println("Unexpected Error in getJobsByCompany: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+        return jobs;
+    }
+
     public List<Job> getAllJobs(int page, int pageSize) {
         List<Job> jobs = new ArrayList<>();
         int offset = (page - 1) * pageSize;
@@ -334,6 +386,11 @@ public class JobDAO extends DBContext {
         ORDER BY j.EndDate DESC
         OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
     """;
+
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL in getAllJobs!");
+            return jobs;
+        }
 
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setInt(1, offset);
@@ -362,7 +419,7 @@ public class JobDAO extends DBContext {
             SELECT 
                 j.Id, j.Title, j.Description, j.Salary, j.Location, 
                 j.EndDate, j.Status, j.CompanyId, j.CategoryId, j.UserId,
-                c.Name AS CompanyName, c.Logo AS CompanyLogo,
+                c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
                 cat.Name AS CategoryName,
                 DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo
             FROM Jobs j
@@ -402,9 +459,14 @@ public class JobDAO extends DBContext {
             FROM Jobs j
             LEFT JOIN Companies c ON j.CompanyId = c.Id
             LEFT JOIN Categories cat ON j.CategoryId = cat.Id
-            WHERE j.CategoryId = ? AND j.Status = 'Active'
+            WHERE j.CategoryId = ? AND j.Status = 1
             ORDER BY j.EndDate DESC
         """;
+
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL in getJobsByCategory!");
+            return jobs;
+        }
 
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, categoryId.toString());
@@ -434,6 +496,11 @@ public class JobDAO extends DBContext {
             WHERE js.JobId = ?
         """;
 
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL in getJobSkills!");
+            return skills;
+        }
+
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             stm.setString(1, jobId.toString());
 
@@ -445,6 +512,10 @@ public class JobDAO extends DBContext {
 
         } catch (SQLException ex) {
             System.err.println("SQL Error in getJobSkills: " + ex.getMessage());
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            System.err.println("Unexpected Error in getJobSkills: " + ex.getMessage());
+            ex.printStackTrace();
         }
 
         return skills;
@@ -478,10 +549,15 @@ public class JobDAO extends DBContext {
                         FROM Jobs j
                         LEFT JOIN Companies c ON j.CompanyId = c.Id
                         LEFT JOIN Categories cat ON j.CategoryId = cat.Id
-                        WHERE j.Status = 'True' 
+                        WHERE j.Status = 1 
                             AND (j.Title LIKE ? OR j.Description LIKE ? OR c.Name LIKE ?)
                         ORDER BY j.EndDate DESC
         """;
+
+        if (connection == null) {
+            System.err.println("ERROR: Database connection is NULL in searchJobs!");
+            return jobs;
+        }
 
         try (PreparedStatement stm = connection.prepareStatement(sql)) {
             String searchPattern = "%" + keyword + "%";

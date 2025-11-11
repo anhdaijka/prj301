@@ -14,6 +14,7 @@
                 <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/pages/job/index.jsp">Find job</a></li>
                 <li><a href="${pageContext.request.contextPath}/views/pages/company/index.jsp">Company</a></li>
+                <li><a href="${pageContext.request.contextPath}/PostJob">Post Job</a></li>
             </ul>
         </div>
         <a href="${pageContext.request.contextPath}/index.jsp" class="btn btn-ghost text-xl">One1</a>
@@ -24,6 +25,7 @@
             <li><a href="${pageContext.request.contextPath}/index.jsp">Home</a></li>
             <li><a href="${pageContext.request.contextPath}/views/pages/job/index.jsp">Find job</a></li>
             <li><a href="${pageContext.request.contextPath}/views/pages/company/index.jsp">Company</a></li>
+            <li><a href="${pageContext.request.contextPath}/PostJob">Post Job</a></li>
         </ul>
     </div>
 

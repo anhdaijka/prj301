@@ -46,7 +46,7 @@
 
                     <fieldset class="fieldset flex-1 w-full">
                         <legend class="fieldset-legend">Category (*)</legend>
-                        <select class="select w-full" name="categoryId" required 
+                        <select class="select w-full" name="categoryId"  
                                 oninvalid="this.setCustomValidity('Please select Catergory')"
                                 oninput="this.setCustomValidity('')"/>
                         <option value="" hidden disabled selected>- Select category -</option>
@@ -60,7 +60,7 @@
 
                     <fieldset class="fieldset flex-1 w-full">
                         <legend class="fieldset-legend">Minium Salaries</legend>
-                        <input type="text" class="input w-full validator" min="100" placeholder="Ex: $1000 - $1500" name="salary"/>
+                        <input type="number" class="input w-full validator" min="100" placeholder="Ex: $1000 - $1500" name="salary"/>
                     </fieldset>
 
 

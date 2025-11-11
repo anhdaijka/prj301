@@ -22,16 +22,22 @@ public class UpdateJobController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String idStr = request.getParameter("id");
+        String idStr = request.getParameter("jobId");
         Job job = null;
+        JobDAO jDao = new JobDAO();
+        SkillDAO sDao = new SkillDAO();
 
         try {
             if (idStr != null && !idStr.isEmpty()) {
                 UUID jobId = UUID.fromString(idStr);
-                JobDAO dao = new JobDAO();
-                job = dao.getJobById(jobId);
-            }
 
+                job = jDao.getJobById(jobId);
+
+                if (job != null) {
+                    List<UUID> jobSkillIds = sDao.getSkillIdsByJobId(jobId);
+                    request.setAttribute("jobSkillIds", jobSkillIds);
+                }
+            }
             loadFormLists(request);
 
             request.setAttribute("job", job);
