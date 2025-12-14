@@ -62,11 +62,19 @@
             </c:when>
 
             <c:otherwise>
-                <c:set var="userObj" value="${sessionScope.user}" />
+                <%--<c:set var="userObj" value="${sessionScope.user}" />
                 <c:set var="userName" value="${not empty userObj.fullName ? userObj.fullName : sessionScope.userName}" />
                 <c:set var="userRole" value="${not empty userObj.roleName ? userObj.roleName : sessionScope.userRole}" />
                 <c:set var="userAvatar" value="${userObj.avatarUrl}" />
-                <c:set var="userEmail" value="${userObj.email}" />
+                <c:set var="userEmail" value="${userObj.email}" />--%>
+
+                <c:set var="userObj" value="${sessionScope.user}" />
+                <c:if test="${not empty userObj}">
+                    <c:set var="userName" value="${not empty userObj.fullName ? userObj.fullName : sessionScope.userName}" />
+                    <c:set var="userRole" value="${not empty userObj.roleName ? userObj.roleName : sessionScope.userRole}" />
+                    <c:set var="userAvatar" value="${userObj.avatarUrl}" />
+                    <c:set var="userEmail" value="${userObj.email}" />
+                </c:if>
 
                 <div class="flex items-center gap-3">
                     <c:choose>
@@ -114,7 +122,7 @@
                             </li>
                             <div class="divider my-1"></div>
                             <li>
-                                <a href="${pageContext.request.contextPath}/views/pages/profile.jsp">
+                                <a href="${pageContext.request.contextPath}/profile">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"
                                          viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

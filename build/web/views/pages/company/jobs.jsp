@@ -58,15 +58,6 @@
                             
                             <!-- Phần thân bảng -->
                             <tbody>
-                                <!-- 
-                                    Giả sử 'companyJobs' là danh sách các job của công ty
-                                    - job.jobId
-                                    - job.title
-                                    - job.location
-                                    - job.status ("Đang tuyển", "Đã đóng")
-                                    - job.applicationCount (int)
-                                    - job.postedDate (String hoặc Date)
-                                -->
                                 <c:forEach var="job" items="${companyJobs}">
                                     <tr>
                                         <!-- Vị trí -->

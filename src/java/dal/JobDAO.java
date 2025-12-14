@@ -58,12 +58,12 @@ public class JobDAO extends DBContext {
 
         return jobs;
     }
-    
+
     public List<Job> getAllJobs(int page, int pageSize) {
-    List<Job> jobs = new ArrayList<>();
-    int offset = (page - 1) * pageSize;
-    
-    String sql = """
+        List<Job> jobs = new ArrayList<>();
+        int offset = (page - 1) * pageSize;
+
+        String sql = """
         SELECT 
             j.Id, j.Title, j.Description, j.Salary, j.Location, 
             j.EndDate, j.Status, j.CompanyId, j.CategoryId,
@@ -77,28 +77,28 @@ public class JobDAO extends DBContext {
         ORDER BY j.EndDate DESC
         OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
     """;
-    
-    try (PreparedStatement stm = connection.prepareStatement(sql)) {
-        stm.setInt(1, offset);
-        stm.setInt(2, pageSize);
-        
-        try (ResultSet rs = stm.executeQuery()) {
-            while (rs.next()) {
-                Job job = extractJobFromResultSet(rs);
-                job.setSkills(getJobSkills(job.getId()));
-                jobs.add(job);
+
+        try (PreparedStatement stm = connection.prepareStatement(sql)) {
+            stm.setInt(1, offset);
+            stm.setInt(2, pageSize);
+
+            try (ResultSet rs = stm.executeQuery()) {
+                while (rs.next()) {
+                    Job job = extractJobFromResultSet(rs);
+                    job.setSkills(getJobSkills(job.getId()));
+                    jobs.add(job);
+                }
             }
+
+            System.out.println("getAllJobs: Loaded " + jobs.size() + " jobs (page " + page + ")");
+
+        } catch (SQLException ex) {
+            System.err.println("SQL Error in getAllJobs: " + ex.getMessage());
+            ex.printStackTrace();
         }
-        
-        System.out.println("getAllJobs: Loaded " + jobs.size() + " jobs (page " + page + ")");
-        
-    } catch (SQLException ex) {
-        System.err.println("SQL Error in getAllJobs: " + ex.getMessage());
-        ex.printStackTrace();
+
+        return jobs;
     }
-    
-    return jobs;
-}
 
     public Job getJobById(UUID jobId) {
         String sql = """
@@ -247,6 +247,53 @@ public class JobDAO extends DBContext {
 
         return jobs;
     }
+    
+    public List<Job> getJobsByCompanyId(UUID companyId) {
+    List<Job> jobs = new ArrayList<>();
+    String sql = """
+        SELECT 
+            j.Id, j.Title, j.Salary, j.Location, j.Description, j.EndDate,
+            c.Name AS CompanyName, c.ImageUrl AS CompanyLogo,
+            cat.Name AS CategoryName,
+            DATEDIFF(DAY, j.EndDate, GETDATE()) AS DaysAgo,
+            (SELECT STRING_AGG(s.Name, ', ') 
+             FROM JobSkills js JOIN Skills s ON js.SkillId = s.Id 
+             WHERE js.JobId = j.Id) AS Skills
+        FROM Jobs j
+        LEFT JOIN Companies c ON j.CompanyId = c.Id
+        LEFT JOIN Categories cat ON j.CategoryId = cat.Id
+        WHERE j.CompanyId = ? AND j.EndDate > GETDATE()
+        ORDER BY j.EndDate DESC
+    """;
+
+    if (connection == null) {
+        System.err.println("ERROR: Database connection is NULL!");
+        return jobs;
+    }
+
+    try (PreparedStatement stm = connection.prepareStatement(sql)) {
+        stm.setString(1, companyId.toString());
+        
+        try (ResultSet rs = stm.executeQuery()) {
+            while (rs.next()) {
+                Job job = new Job(); 
+                job.setId(UUID.fromString(rs.getString("Id")));
+                job.setTitle(rs.getString("Title"));
+                job.setLocation(rs.getString("Location"));
+                job.setSalary(rs.getInt("Salary"));
+                job.setDaysAgo(rs.getInt("DaysAgo")); // Cần thêm setter này vào Job model
+                job.setSkills(getJobSkills(job.getId()));
+                
+                jobs.add(job);
+            }
+        }
+    } catch (SQLException ex) {
+        System.err.println("SQL Error in getJobsByCompanyId: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    
+    return jobs;
+}
 
     private Job extractJobFromResultSet(ResultSet rs) throws SQLException {
         Job job = new Job();
